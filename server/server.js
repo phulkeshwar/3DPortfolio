@@ -9,7 +9,10 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: process.env.CLIENT_URL || '*',
+    credentials: true
+}));
 
 // Connect to Database
 console.log('Connecting to database...');
@@ -38,3 +41,17 @@ if (require.main === module) {
 }
 
 module.exports = app;
+
+// Global Error Handlers
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+    // Application specific logging, throwing an error, or other logic here
+});
+
+process.on('uncaughtException', (err) => {
+    console.error('❌ Uncaught Exception:', err);
+    // In many cases, it's safer to exit the process after an uncaught exception
+    if (process.env.NODE_ENV !== 'production') {
+        process.exit(1);
+    }
+});
