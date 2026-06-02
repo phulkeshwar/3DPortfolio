@@ -1,44 +1,47 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import About from './pages/About';
-import Skills from './pages/Skills';
-import Projects from './pages/Projects';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import VerifyEmail from './pages/VerifyEmail';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import Dashboard from './pages/Dashboard';
+import { useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ThreeBackground from './components/ThreeBackground';
+import ScrollProgress from './components/ScrollProgress';
+import SideNav from './components/SideNav';
+import HeroSection from './components/HeroSection';
+import AboutSection from './components/AboutSection';
+import ExpertiseSection from './components/ExpertiseSection';
+import ProjectsSection from './components/ProjectsSection';
+import ContactSection from './components/ContactSection';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+    useEffect(() => {
+        // Refresh ScrollTrigger after everything is loaded
+        const timeout = setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 500);
+
+        return () => clearTimeout(timeout);
+    }, []);
+
     return (
-        <AuthProvider>
-            <Router>
-                <div className="flex flex-col min-h-screen">
-                    <Navbar />
-                    <main className="flex-grow">
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/about" element={<About />} />
-                            <Route path="/skills" element={<Skills />} />
-                            <Route path="/projects" element={<Projects />} />
-                            <Route path="/contact" element={<Contact />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/verify-email" element={<VerifyEmail />} />
-                            <Route path="/forgot-password" element={<ForgotPassword />} />
-                            <Route path="/reset-password" element={<ResetPassword />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
-                        </Routes>
-                    </main>
-                    <Footer />
-                </div>
-            </Router>
-        </AuthProvider>
+        <>
+            {/* Fixed 3D Background */}
+            <ThreeBackground />
+
+            {/* Scroll Progress Bar */}
+            <ScrollProgress />
+
+            {/* Navigation */}
+            <SideNav />
+
+            {/* Main Content */}
+            <main className="main-content relative z-10 pr-0 md:pr-[100px]">
+                <HeroSection />
+                <AboutSection />
+                <ExpertiseSection />
+                <ProjectsSection />
+                <ContactSection />
+            </main>
+        </>
     );
 }
 
