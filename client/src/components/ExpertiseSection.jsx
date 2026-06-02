@@ -8,7 +8,7 @@ const skillCategories = [
     {
         title: 'Core Backend',
         color: 'text-emerald-400',
-        bgColor: 'bg-emerald-400/10',
+        dotColor: 'bg-emerald-400',
         skills: [
             { name: 'Node.js', icon: 'devicon-nodejs-plain colored' },
             { name: 'Express.js', icon: 'devicon-express-original' },
@@ -20,7 +20,7 @@ const skillCategories = [
     {
         title: 'Frontend & UI',
         color: 'text-primary-400',
-        bgColor: 'bg-primary-400/10',
+        dotColor: 'bg-primary-400',
         skills: [
             { name: 'React.js', icon: 'devicon-react-original colored' },
             { name: 'Next.js', icon: 'devicon-nextjs-plain' },
@@ -32,7 +32,7 @@ const skillCategories = [
     {
         title: 'Database & Cloud',
         color: 'text-amber-400',
-        bgColor: 'bg-amber-400/10',
+        dotColor: 'bg-amber-400',
         skills: [
             { name: 'MongoDB', icon: 'devicon-mongodb-plain colored' },
             { name: 'PostgreSQL', icon: 'devicon-postgresql-plain colored' },
@@ -44,7 +44,7 @@ const skillCategories = [
     {
         title: 'Computer Science',
         color: 'text-purple-400',
-        bgColor: 'bg-purple-400/10',
+        dotColor: 'bg-purple-400',
         skills: [
             { name: 'C++', icon: 'devicon-cplusplus-plain colored' },
             { name: 'Git', icon: 'devicon-git-plain colored' },
@@ -59,37 +59,74 @@ const ExpertiseSection = () => {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.utils.toArray('.expertise-reveal').forEach((el, i) => {
+            // Section header slides in from left
+            gsap.fromTo(
+                '.expertise-header',
+                { x: -100, opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: '.expertise-header',
+                        start: 'top 85%',
+                        toggleActions: 'play none none none',
+                    },
+                }
+            );
+
+            // Container card scales up
+            gsap.fromTo(
+                '.expertise-container',
+                { scale: 0.92, opacity: 0, y: 40 },
+                {
+                    scale: 1,
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: '.expertise-container',
+                        start: 'top 85%',
+                        toggleActions: 'play none none none',
+                    },
+                }
+            );
+
+            // Each skill row slides in from the right one by one
+            gsap.utils.toArray('.skill-row-item').forEach((row, i) => {
                 gsap.fromTo(
-                    el,
-                    { y: 40, opacity: 0 },
+                    row,
+                    { x: 80, opacity: 0 },
                     {
-                        y: 0,
+                        x: 0,
                         opacity: 1,
                         duration: 0.7,
-                        delay: i * 0.08,
+                        delay: i * 0.15,
                         ease: 'power3.out',
                         scrollTrigger: {
-                            trigger: el,
-                            start: 'top 85%',
+                            trigger: '.expertise-container',
+                            start: 'top 75%',
                             toggleActions: 'play none none none',
                         },
                     }
                 );
             });
 
-            // Stagger the pills within each row
-            gsap.utils.toArray('.skill-row').forEach((row) => {
+            // Stagger tech pills within each row
+            gsap.utils.toArray('.skill-row-item').forEach((row) => {
                 const pills = row.querySelectorAll('.tech-pill');
                 gsap.fromTo(
                     pills,
-                    { scale: 0.8, opacity: 0 },
+                    { scale: 0, opacity: 0, rotate: -10 },
                     {
                         scale: 1,
                         opacity: 1,
+                        rotate: 0,
                         duration: 0.4,
-                        stagger: 0.06,
-                        ease: 'back.out(1.5)',
+                        stagger: 0.07,
+                        ease: 'back.out(2)',
                         scrollTrigger: {
                             trigger: row,
                             start: 'top 85%',
@@ -109,7 +146,7 @@ const ExpertiseSection = () => {
 
             <div className="max-w-6xl mx-auto px-6">
                 {/* Section Header */}
-                <div className="expertise-reveal mb-16">
+                <div className="expertise-header mb-16">
                     <p className="text-primary-400 font-semibold text-sm uppercase tracking-widest mb-3">
                         What I Work With
                     </p>
@@ -122,18 +159,18 @@ const ExpertiseSection = () => {
                 </div>
 
                 {/* Skills Grid */}
-                <div className="glass-card p-6 sm:p-8 lg:p-10 !rounded-3xl">
+                <div className="expertise-container glass-card p-6 sm:p-8 lg:p-10 !rounded-3xl">
                     {skillCategories.map((category, idx) => (
                         <div
                             key={idx}
-                            className={`skill-row expertise-reveal grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-4 sm:gap-8 items-start py-6 ${
+                            className={`skill-row-item grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-4 sm:gap-8 items-start py-6 ${
                                 idx !== skillCategories.length - 1
                                     ? 'border-b border-slate-700/50'
                                     : ''
                             }`}
                         >
                             <div className="flex items-center gap-3">
-                                <div className={`w-2 h-2 rounded-full ${category.bgColor.replace('/10', '')}`} />
+                                <div className={`w-2 h-2 rounded-full ${category.dotColor}`} />
                                 <strong className={`${category.color} text-base font-bold`}>
                                     {category.title}
                                 </strong>

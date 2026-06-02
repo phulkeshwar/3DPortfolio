@@ -26,7 +26,7 @@ function AnimatedCounter({ target, suffix = '', isDecimal = false, inView }) {
         const timer = setInterval(() => {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
             const current = start + (end - start) * eased;
             setCount(isDecimal ? parseFloat(current.toFixed(1)) : Math.floor(current));
             if (progress >= 1) clearInterval(timer);
@@ -49,19 +49,59 @@ const AboutSection = () => {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Reveal animations
-            gsap.utils.toArray('.about-reveal').forEach((el, i) => {
+            // Section header slides in from the left
+            gsap.fromTo(
+                '.about-header',
+                { x: -100, opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: '.about-header',
+                        start: 'top 85%',
+                        toggleActions: 'play none none none',
+                    },
+                }
+            );
+
+            // Left bio blocks fly in one by one from the left
+            gsap.utils.toArray('.bio-block').forEach((el, i) => {
                 gsap.fromTo(
                     el,
-                    { y: 50, opacity: 0 },
+                    { x: -80, opacity: 0, rotateY: -5 },
                     {
-                        y: 0,
+                        x: 0,
                         opacity: 1,
+                        rotateY: 0,
                         duration: 0.8,
-                        delay: i * 0.1,
+                        delay: i * 0.15,
                         ease: 'power3.out',
                         scrollTrigger: {
                             trigger: el,
+                            start: 'top 88%',
+                            toggleActions: 'play none none none',
+                        },
+                    }
+                );
+            });
+
+            // Right stat cards fly in one by one from the right
+            gsap.utils.toArray('.stat-card').forEach((el, i) => {
+                gsap.fromTo(
+                    el,
+                    { x: 80, opacity: 0, scale: 0.85, rotateY: 5 },
+                    {
+                        x: 0,
+                        opacity: 1,
+                        scale: 1,
+                        rotateY: 0,
+                        duration: 0.7,
+                        delay: i * 0.12,
+                        ease: 'back.out(1.5)',
+                        scrollTrigger: {
+                            trigger: '.stats-container',
                             start: 'top 85%',
                             toggleActions: 'play none none none',
                         },
@@ -82,12 +122,11 @@ const AboutSection = () => {
 
     return (
         <section id="about" ref={sectionRef} className="relative py-28 sm:py-36">
-            {/* Section Divider */}
             <div className="section-divider mb-20" />
 
             <div className="max-w-6xl mx-auto px-6">
                 {/* Section Header */}
-                <div className="about-reveal mb-16">
+                <div className="about-header mb-16">
                     <p className="text-primary-400 font-semibold text-sm uppercase tracking-widest mb-3">
                         Who I Am
                     </p>
@@ -102,7 +141,7 @@ const AboutSection = () => {
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
                     {/* Left — Bio */}
                     <div className="space-y-8">
-                        <div className="about-reveal">
+                        <div className="bio-block">
                             <h3 className="text-xl font-bold text-white flex items-center gap-3 mb-4">
                                 <div className="w-10 h-10 rounded-xl bg-primary-400/10 flex items-center justify-center">
                                     <Briefcase size={18} className="text-primary-400" />
@@ -117,7 +156,7 @@ const AboutSection = () => {
                             </p>
                         </div>
 
-                        <div className="about-reveal">
+                        <div className="bio-block">
                             <p className="text-slate-400 leading-relaxed">
                                 Recently selected as a{' '}
                                 <span className="text-white font-medium">Web Development Intern at UptoSkills</span>,
@@ -127,7 +166,7 @@ const AboutSection = () => {
                             </p>
                         </div>
 
-                        <div className="about-reveal glass-card p-6 !rounded-2xl">
+                        <div className="bio-block glass-card p-6 !rounded-2xl">
                             <h3 className="text-lg font-bold text-white flex items-center gap-3 mb-3">
                                 <div className="w-9 h-9 rounded-xl bg-purple-500/10 flex items-center justify-center">
                                     <GraduationCap size={17} className="text-purple-400" />
@@ -145,7 +184,7 @@ const AboutSection = () => {
                             </div>
                         </div>
 
-                        <div className="about-reveal">
+                        <div className="bio-block">
                             <a
                                 href={ProfilePdf}
                                 download="Phulkeshwar_Mahto_Resume.pdf"
@@ -162,7 +201,7 @@ const AboutSection = () => {
                         {stats.map((stat, i) => (
                             <div
                                 key={i}
-                                className="about-reveal glass-card p-6 !rounded-2xl flex flex-col justify-center card-shine"
+                                className="stat-card glass-card p-6 !rounded-2xl flex flex-col justify-center card-shine"
                             >
                                 <div className="text-4xl sm:text-5xl font-black text-white mb-1 font-display">
                                     <AnimatedCounter

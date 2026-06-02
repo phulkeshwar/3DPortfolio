@@ -11,7 +11,6 @@ const navItems = [
 
 const SideNav = () => {
     const [activeSection, setActiveSection] = useState('hero');
-    const navRef = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -39,7 +38,6 @@ const SideNav = () => {
 
     return (
         <nav
-            ref={navRef}
             className="side-nav-container fixed right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-6 z-50 px-3 py-8 rounded-[50px]"
             style={{
                 background: 'rgba(2, 6, 23, 0.5)',
@@ -53,7 +51,7 @@ const SideNav = () => {
             <button
                 onClick={() => scrollTo('hero')}
                 className="nav-logo-text font-display font-extrabold text-sm text-white tracking-widest mb-2"
-                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                style={{ writingMode: 'vertical-lr' }}
             >
                 PM.
             </button>
@@ -76,7 +74,7 @@ const SideNav = () => {
                         />
                         <span
                             className="nav-label text-[0.6rem] font-semibold uppercase tracking-[0.12em]"
-                            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+                            style={{ writingMode: 'vertical-lr' }}
                         >
                             {item.label}
                         </span>

@@ -1,4 +1,5 @@
 const Contact = require('../models/Contact');
+const sendEmail = require('../utils/sendEmail');
 
 // @desc    Send a message
 // @route   POST /api/contact
@@ -17,6 +18,18 @@ const sendMessage = async (req, res) => {
             email,
             message,
         });
+
+        // Direct email report notification
+        try {
+            await sendEmail({
+                email: process.env.EMAIL_USER || 'phulkeshwarmahto9@gmail.com',
+                subject: `💼 Portfolio Message from ${name}`,
+                message: `Hello Phulkeshwar,\n\nYou have received a new contact message from your portfolio website.\n\n👤 Sender: ${name}\n✉️ Email: ${email}\n\n💬 Message:\n"${message}"\n\nBest regards,\nYour Portfolio System`,
+            });
+            console.log(`✅ Direct email report successfully dispatched to ${process.env.EMAIL_USER || 'phulkeshwarmahto9@gmail.com'}`);
+        } catch (mailError) {
+            console.error('⚠️ Email notification could not be sent. Check your EMAIL_PASS in .env:', mailError.message);
+        }
 
         res.status(201).json(contact);
     } catch (error) {

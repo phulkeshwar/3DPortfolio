@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ThreeBackground from './components/ThreeBackground';
@@ -9,15 +10,17 @@ import AboutSection from './components/AboutSection';
 import ExpertiseSection from './components/ExpertiseSection';
 import ProjectsSection from './components/ProjectsSection';
 import ContactSection from './components/ContactSection';
+import Dashboard from './pages/Dashboard';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
+// Main portfolio page layout with fixed custom sidebar navigation and progress tracking
+function PortfolioLayout() {
     useEffect(() => {
-        // Refresh ScrollTrigger after everything is loaded
+        // Refresh ScrollTrigger after sections mount
         const timeout = setTimeout(() => {
             ScrollTrigger.refresh();
-        }, 500);
+        }, 600);
 
         return () => clearTimeout(timeout);
     }, []);
@@ -42,6 +45,17 @@ function App() {
                 <ContactSection />
             </main>
         </>
+    );
+}
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<PortfolioLayout />} />
+                <Route path="/admin" element={<Dashboard />} />
+            </Routes>
+        </Router>
     );
 }
 
