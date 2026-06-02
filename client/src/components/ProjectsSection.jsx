@@ -15,7 +15,7 @@ const staticProjects = [
         accent: 'from-cyan-500 to-blue-600',
         accentBorder: 'group-hover:border-cyan-400/40',
         githubLink: 'https://github.com/phulkeshwar/Call.io',
-        liveLink: 'https://callio.vercel.app',
+        liveLink: 'https://callrandom.vercel.app/',
     },
     {
         title: 'MedScribe AI',
@@ -25,9 +25,8 @@ const staticProjects = [
         icon: Trophy,
         accent: 'from-amber-400 to-orange-500',
         accentBorder: 'group-hover:border-amber-400/40',
-        badge: '🏆 Hackathon Winner',
         githubLink: 'https://github.com/phulkeshwar/MedScribe-AI',
-        liveLink: 'https://medscribe-ai.vercel.app',
+        liveLink: 'https://medscribe-ai-ruby.vercel.app/',
     },
     {
         title: 'VolunteerSync',
@@ -49,7 +48,7 @@ const staticProjects = [
         accent: 'from-red-400 to-pink-500',
         accentBorder: 'group-hover:border-red-400/40',
         githubLink: 'https://github.com/phulkeshwar/niamt-racing',
-        liveLink: 'https://niamtracing.in',
+        liveLink: 'https://niamtracing.vercel.app/',
     },
     {
         title: 'GramBazaar',
@@ -60,7 +59,7 @@ const staticProjects = [
         accent: 'from-violet-400 to-purple-500',
         accentBorder: 'group-hover:border-violet-400/40',
         githubLink: 'https://github.com/phulkeshwar/GramBazaar',
-        liveLink: 'https://grambazaar.vercel.app',
+        liveLink: 'https://garambazaar.vercel.app/',
     },
     {
         title: 'PeekPost',
