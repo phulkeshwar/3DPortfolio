@@ -9,6 +9,10 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use((req, res, next) => {
+    console.log(`📡 [${new Date().toLocaleTimeString()}] ${req.method} ${req.url}`);
+    next();
+});
 const allowedOrigins = [
     process.env.CLIENT_URL,
     'http://localhost:5173',
