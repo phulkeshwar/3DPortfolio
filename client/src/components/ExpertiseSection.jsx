@@ -70,8 +70,11 @@ const skillCategories = [
         color: 'text-pink-400',
         dotColor: 'bg-pink-400',
         skills: [
-            { name: 'Video Editing', emoji: '🎬' },
-            { name: 'Content Creation', emoji: '✍️' },
+            { name: 'DaVinci Resolve', emoji: '🎥' },
+            { name: 'CapCut', emoji: '🎬' },
+            { name: 'InShot', emoji: '📱' },
+            { name: 'Canva', emoji: '🎨' },
+            { name: 'PicsArt', emoji: '📸' },
         ],
     },
 ];
