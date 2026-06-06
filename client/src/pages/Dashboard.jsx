@@ -314,88 +314,103 @@ const Dashboard = () => {
         return (
             <>
                 <ThreeBackground />
-                <div className="min-h-screen w-full flex items-center justify-center p-6 relative z-10">
-                    {/* Back to Site Button */}
+                <div className="min-h-screen w-full flex flex-col lg:flex-row relative z-10">
+                    {/* Back to Site Button (always visible, top left) */}
                     <button 
                         onClick={() => navigate('/')}
-                        className="absolute top-6 left-6 inline-flex items-center gap-2 px-4 py-2 bg-slate-900/60 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded-xl text-xs font-mono transition duration-300"
+                        className="absolute top-6 left-6 inline-flex items-center gap-2 px-4 py-2 bg-slate-900/60 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded-xl text-xs font-mono transition duration-300 z-20"
                     >
                         <ArrowLeft size={13} />
                         Back to Portfolio
                     </button>
 
-                    <div className="w-full max-w-md glass-card !rounded-3xl p-8 sm:p-10 border border-slate-800 relative overflow-hidden">
-                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary-400 via-purple-500 to-pink-500" />
-                        
-                        <div className="text-center mb-8">
-                            <div className="w-12 h-12 bg-primary-400/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-primary-400/20">
-                                <Lock size={20} className="text-primary-400" />
-                            </div>
-                            <h2 className="font-display text-2xl font-black tracking-tight text-white">
-                                Command Center<span className="gradient-text">.</span>
-                            </h2>
-                            <p className="mt-2 text-slate-400 text-xs font-mono uppercase tracking-widest">
-                                Admin Authentication Required
+                    {/* Left Pane - Large spacer on desktop to showcase the 3D globe */}
+                    <div className="hidden lg:flex lg:w-1/2 p-12 flex-col justify-end">
+                        <div className="max-w-md pb-12">
+                            <h1 className="font-display text-4xl font-black text-white mb-4 tracking-tight leading-tight">
+                                Control Center<span className="gradient-text">.</span>
+                            </h1>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                Manage project showcases, monitor incoming queries, and update system parameters in real-time.
                             </p>
                         </div>
+                    </div>
 
-                        <form onSubmit={handleLoginSubmit} className="space-y-5">
-                            {loginStatus.text && (
-                                <div className={`p-4 rounded-xl flex items-start gap-3 border text-xs leading-relaxed ${
-                                    loginStatus.type === 'success' 
-                                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' 
-                                        : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
-                                }`}>
-                                    {loginStatus.type === 'success' ? <CheckCircle size={15} className="shrink-0" /> : <AlertCircle size={15} className="shrink-0" />}
-                                    <span>{loginStatus.text}</span>
+                    {/* Right Pane - Holds the Login Form */}
+                    <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-20 bg-slate-950/10 lg:bg-[#020617]/40 lg:backdrop-blur-sm lg:border-l lg:border-slate-800/40 min-h-screen">
+                        <div className="w-full max-w-md glass-card !rounded-3xl p-8 sm:p-10 border border-slate-800 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary-400 via-purple-500 to-pink-500" />
+                            
+                            <div className="text-center mb-8">
+                                <div className="w-12 h-12 bg-primary-400/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-primary-400/20">
+                                    <Lock size={20} className="text-primary-400" />
                                 </div>
-                            )}
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">
-                                    Username / Email
-                                </label>
-                                <div className="relative">
-                                    <UserIcon size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                                    <input
-                                        type="text"
-                                        value={loginData.username}
-                                        onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
-                                        required
-                                        disabled={isLoggingIn}
-                                        placeholder="Admin Username"
-                                        className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/40 border border-slate-800 focus:border-primary-400 focus:ring-1 focus:ring-primary-400 focus:outline-none text-white text-sm transition placeholder:text-slate-700 font-mono"
-                                    />
-                                </div>
+                                <h2 className="font-display text-2xl font-black tracking-tight text-white">
+                                    Command Center<span className="gradient-text">.</span>
+                                </h2>
+                                <p className="mt-2 text-slate-400 text-xs font-mono uppercase tracking-widest">
+                                    Admin Authentication Required
+                                </p>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">
-                                    Access Password
-                                </label>
-                                <div className="relative">
-                                    <Lock size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-                                    <input
-                                        type="password"
-                                        value={loginData.password}
-                                        onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                                        required
-                                        disabled={isLoggingIn}
-                                        placeholder="••••••••••••"
-                                        className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/40 border border-slate-800 focus:border-primary-400 focus:ring-1 focus:ring-primary-400 focus:outline-none text-white text-sm transition placeholder:text-slate-700 font-mono"
-                                    />
-                                </div>
-                            </div>
+                            <form onSubmit={handleLoginSubmit} className="space-y-5">
+                                {loginStatus.text && (
+                                    <div className={`p-4 rounded-xl flex items-start gap-3 border text-xs leading-relaxed ${
+                                        loginStatus.type === 'success' 
+                                            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' 
+                                            : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+                                    }`}>
+                                        {loginStatus.type === 'success' ? <CheckCircle size={15} className="shrink-0" /> : <AlertCircle size={15} className="shrink-0" />}
+                                        <span>{loginStatus.text}</span>
+                                    </div>
+                                )}
 
-                            <button
-                                type="submit"
-                                disabled={isLoggingIn}
-                                className="w-full mt-2 group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-white text-gray-900 font-bold text-sm rounded-xl hover:bg-primary-400 hover:text-white transition-all duration-300 hover:-translate-y-0.5 shadow-xl shadow-white/5 disabled:opacity-50 disabled:pointer-events-none"
-                            >
-                                <Send size={14} />
-                                {isLoggingIn ? 'Verifying Identity...' : 'Access Dashboard'}
-                            </button>
-                        </form>
+                                <div className="space-y-2">
+                                    <label className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">
+                                        Username / Email
+                                    </label>
+                                    <div className="relative">
+                                        <UserIcon size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                                        <input
+                                            type="text"
+                                            value={loginData.username}
+                                            onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
+                                            required
+                                            disabled={isLoggingIn}
+                                            placeholder="Admin Username"
+                                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/40 border border-slate-800 focus:border-primary-400 focus:ring-1 focus:ring-primary-400 focus:outline-none text-white text-sm transition placeholder:text-slate-700 font-mono"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">
+                                        Access Password
+                                    </label>
+                                    <div className="relative">
+                                        <Lock size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                                        <input
+                                            type="password"
+                                            value={loginData.password}
+                                            onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                                            required
+                                            disabled={isLoggingIn}
+                                            placeholder="••••••••••••"
+                                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950/40 border border-slate-800 focus:border-primary-400 focus:ring-1 focus:ring-primary-400 focus:outline-none text-white text-sm transition placeholder:text-slate-700 font-mono"
+                                        />
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    disabled={isLoggingIn}
+                                    className="w-full mt-2 group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-white text-gray-900 font-bold text-sm rounded-xl hover:bg-primary-400 hover:text-white transition-all duration-300 hover:-translate-y-0.5 shadow-xl shadow-white/5 disabled:opacity-50 disabled:pointer-events-none"
+                                >
+                                    <Send size={14} />
+                                    {isLoggingIn ? 'Verifying Identity...' : 'Access Dashboard'}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </>
