@@ -6,15 +6,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 const skillCategories = [
     {
-        title: 'Core Backend',
-        color: 'text-emerald-400',
-        dotColor: 'bg-emerald-400',
+        title: 'Languages',
+        color: 'text-sky-400',
+        dotColor: 'bg-sky-400',
         skills: [
-            { name: 'Node.js', icon: 'devicon-nodejs-plain colored' },
-            { name: 'Express.js', icon: 'devicon-express-original' },
-            { name: 'Socket.io', icon: 'devicon-socketio-original' },
-            { name: 'Redis', icon: 'devicon-redis-plain colored' },
-            { name: 'WebRTC', emoji: '🌐' },
+            { name: 'JavaScript', icon: 'devicon-javascript-plain colored' },
+            { name: 'TypeScript', icon: 'devicon-typescript-plain colored' },
+            { name: 'C++', icon: 'devicon-cplusplus-plain colored' },
+            { name: 'Python', icon: 'devicon-python-plain colored' },
+            { name: 'HTML5', icon: 'devicon-html5-plain colored' },
+            { name: 'CSS3', icon: 'devicon-css3-plain colored' },
         ],
     },
     {
@@ -23,10 +24,21 @@ const skillCategories = [
         dotColor: 'bg-primary-400',
         skills: [
             { name: 'React.js', icon: 'devicon-react-original colored' },
-            { name: 'Next.js', icon: 'devicon-nextjs-plain' },
-            { name: 'TypeScript', icon: 'devicon-typescript-plain colored' },
-            { name: 'JavaScript', icon: 'devicon-javascript-plain colored' },
+            { name: 'Three.js', icon: 'devicon-threejs-original' },
             { name: 'Tailwind CSS', icon: 'devicon-tailwindcss-original colored' },
+            { name: 'Figma', icon: 'devicon-figma-plain colored' },
+        ],
+    },
+    {
+        title: 'Core Backend',
+        color: 'text-emerald-400',
+        dotColor: 'bg-emerald-400',
+        skills: [
+            { name: 'Node.js', icon: 'devicon-nodejs-plain colored' },
+            { name: 'Express.js', icon: 'devicon-express-original' },
+            { name: 'Socket.io', icon: 'devicon-socketio-original' },
+            { name: 'WebRTC', emoji: '🌐' },
+            { name: 'Redis', icon: 'devicon-redis-plain colored' },
         ],
     },
     {
@@ -36,20 +48,21 @@ const skillCategories = [
         skills: [
             { name: 'MongoDB', icon: 'devicon-mongodb-plain colored' },
             { name: 'PostgreSQL', icon: 'devicon-postgresql-plain colored' },
-            { name: 'Prisma ORM', icon: 'devicon-prisma-original' },
-            { name: 'Vercel', icon: 'devicon-vercel-original' },
-            { name: 'AWS', icon: 'devicon-amazonwebservices-plain-wordmark colored' },
+            { name: 'Firebase', icon: 'devicon-firebase-plain colored' },
+            { name: 'Cloudinary', icon: 'devicon-cloudinary-original' },
         ],
     },
     {
-        title: 'Computer Science',
+        title: 'DevOps & Tools',
         color: 'text-purple-400',
         dotColor: 'bg-purple-400',
         skills: [
-            { name: 'C++', icon: 'devicon-cplusplus-plain colored' },
-            { name: 'Git', icon: 'devicon-git-plain colored' },
-            { name: 'Linux', icon: 'devicon-linux-plain' },
             { name: 'Docker', icon: 'devicon-docker-plain colored' },
+            { name: 'Git', icon: 'devicon-git-plain colored' },
+            { name: 'GitHub', icon: 'devicon-github-plain colored' },
+            { name: 'Postman', icon: 'devicon-postman-plain colored' },
+            { name: 'Vercel', icon: 'devicon-vercel-original' },
+            { name: 'Render', icon: 'devicon-render-plain colored' },
         ],
     },
 ];
