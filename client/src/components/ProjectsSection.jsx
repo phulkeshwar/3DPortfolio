@@ -20,7 +20,7 @@ const staticProjects = [
     {
         title: 'MedScribe AI',
         description:
-            "Award-winning clinical assistant platform. Engineered a Doctor Mode for automated SOAP notes and Patient Mode for OCR prescription analysis utilizing Google's Gemma 4 27B model.",
+            "Clinical assistant platform. Engineered a Doctor Mode for automated SOAP notes and Patient Mode for OCR prescription analysis utilizing Google's Gemma 4 27B model.",
         tech: ['MERN', 'Gemma 4 API', 'Google AI Studio'],
         icon: Trophy,
         accent: 'from-amber-400 to-orange-500',
@@ -64,8 +64,8 @@ const staticProjects = [
     {
         title: 'PeekPost',
         description:
-            'Scalable social networking clone handling complex relational data. Implemented a strict Prisma ORM schema to manage infinite-scroll feeds, nested comments, and bidirectional follow graphs.',
-        tech: ['React', 'Node', 'Prisma ORM', 'PostgreSQL'],
+            'Scalable instagram clone handling complex relational data. Implemented a strict Mongoose schema to manage infinite-scroll feeds, nested comments, and bidirectional follow graphs.',
+        tech: ['React', 'Node', 'Mongoose', 'MongoDB'],
         icon: Globe,
         accent: 'from-sky-400 to-indigo-500',
         accentBorder: 'group-hover:border-sky-400/40',
