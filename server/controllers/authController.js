@@ -12,14 +12,17 @@ const loginUser = async (req, res) => {
 
     try {
         // Master Admin Credentials Bypass & Dynamic Creation
-        if ((email === 'phulkeshwar' || email === 'phulkeshwarmahto9@gmail.com') && password === 'phulkeshwar@828403') {
-            let adminUser = await User.findOne({ email: 'phulkeshwarmahto9@gmail.com' });
+        const adminEmail = process.env.ADMIN_EMAIL || 'phulkeshwarmahto9@gmail.com';
+        const adminPassword = process.env.ADMIN_PASSWORD;
+
+        if (adminPassword && (email === 'phulkeshwar' || email === adminEmail) && password === adminPassword) {
+            let adminUser = await User.findOne({ email: adminEmail });
             if (!adminUser) {
                 const salt = await bcrypt.genSalt(10);
-                const hashedPassword = await bcrypt.hash('phulkeshwar@828403', salt);
+                const hashedPassword = await bcrypt.hash(adminPassword, salt);
                 adminUser = await User.create({
                     name: 'Phulkeshwar Mahto',
-                    email: 'phulkeshwarmahto9@gmail.com',
+                    email: adminEmail,
                     password: hashedPassword,
                     role: 'admin',
                     isVerified: true
