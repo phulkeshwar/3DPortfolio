@@ -5,7 +5,7 @@ import axios from 'axios';
 if (import.meta.env.VITE_API_URL) {
     axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 } else if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
-    axios.defaults.baseURL = 'https://myportfolio-server.vercel.app';
+    axios.defaults.baseURL = 'https://portfolio-backend-980z.onrender.com';
 }
 
 const AuthContext = createContext();
