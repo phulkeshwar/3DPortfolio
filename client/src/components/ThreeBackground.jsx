@@ -9,7 +9,7 @@ const EARTH_BUMP = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r169/examples/te
 const EARTH_SPECULAR = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r169/examples/textures/planets/earth_specular_2048.jpg';
 
 /* ─── Scroll-linked Earth Globe ─── */
-function Earth({ scrollRef, mouseRef }) {
+function Earth({ scrollRef, mouseRef, shiftLeft }) {
     const meshRef = useRef();
     const atmosphereRef = useRef();
     const cloudsRef = useRef();
@@ -50,7 +50,7 @@ function Earth({ scrollRef, mouseRef }) {
         state.camera.position.z += (targetZ - state.camera.position.z) * 0.05;
 
         if (groupRef.current) {
-            const targetOffsetX = (typeof window !== 'undefined' && window.location.pathname === '/admin' && window.innerWidth >= 1024) ? -1.35 : 0;
+            const targetOffsetX = (shiftLeft && typeof window !== 'undefined' && window.innerWidth >= 1024) ? -1.35 : 0;
             groupRef.current.position.x += (targetOffsetX - groupRef.current.position.x) * 0.04; // Smooth lerp transition
         }
 
@@ -308,7 +308,7 @@ function LoadingFallback() {
     );
 }
 
-const ThreeBackground = () => {
+const ThreeBackground = ({ shiftLeft = false }) => {
     const scrollRef = useRef(0);
     const mouseRef = useRef({ x: 0, y: 0 });
 
@@ -355,7 +355,7 @@ const ThreeBackground = () => {
                     speed={0.5}
                 />
                 <Suspense fallback={<LoadingFallback />}>
-                    <Earth scrollRef={scrollRef} mouseRef={mouseRef} />
+                    <Earth scrollRef={scrollRef} mouseRef={mouseRef} shiftLeft={shiftLeft} />
                 </Suspense>
                 <WireframeParticles scrollRef={scrollRef} mouseRef={mouseRef} />
             </Canvas>

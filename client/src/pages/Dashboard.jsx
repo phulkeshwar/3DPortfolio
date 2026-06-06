@@ -395,7 +395,7 @@ const Dashboard = () => {
     if (!isAuthenticated) {
         return (
             <>
-                <ThreeBackground />
+                <ThreeBackground shiftLeft={true} />
                 <div className="min-h-screen w-full flex flex-col lg:flex-row relative z-10">
                     {/* Back to Site Button (always visible, top left) */}
                     <button 
