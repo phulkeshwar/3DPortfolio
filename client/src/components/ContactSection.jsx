@@ -30,6 +30,14 @@ const socials = [
     },
 ];
 
+const getApiUrl = (path) => {
+    if (import.meta.env.VITE_API_URL) return `${import.meta.env.VITE_API_URL}${path}`;
+    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
+        return `https://myportfolio-server.vercel.app${path}`;
+    }
+    return path;
+};
+
 const ContactSection = () => {
     const sectionRef = useRef(null);
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -49,7 +57,7 @@ const ContactSection = () => {
         setIsImproving(true);
         setStatus({ type: '', text: '' });
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/ai/improve-message`, {
+            const res = await fetch(getApiUrl('/api/ai/improve-message'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: formData.message }),
@@ -82,7 +90,7 @@ const ContactSection = () => {
         setStatus({ type: '', text: '' });
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/contact`, {
+            const response = await fetch(getApiUrl('/api/contact'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

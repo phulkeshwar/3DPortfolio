@@ -8,8 +8,13 @@ import { gsap } from 'gsap';
 import ThreeBackground from '../components/ThreeBackground';
 
 const getApiUrl = (path) => {
-    const baseUrl = import.meta.env.VITE_API_URL || '';
-    return baseUrl ? `${baseUrl}${path}` : path;
+    if (import.meta.env.VITE_API_URL) {
+        return `${import.meta.env.VITE_API_URL}${path}`;
+    }
+    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
+        return `https://myportfolio-server.vercel.app${path}`;
+    }
+    return path;
 };
 
 const Dashboard = () => {
@@ -99,11 +104,11 @@ const Dashboard = () => {
             const projectsData = await projectsRes.json();
             if (projectsRes.ok) setProjects(projectsData);
 
-            const skillsRes = await fetch('/api/skills');
+            const skillsRes = await fetch(getApiUrl('/api/skills'));
             const skillsData = await skillsRes.json();
             if (skillsRes.ok) setSkills(skillsData);
 
-            const messagesRes = await fetch('/api/contact', config);
+            const messagesRes = await fetch(getApiUrl('/api/contact'), config);
             const messagesData = await messagesRes.json();
             if (messagesRes.ok) setMessages(messagesData);
 
@@ -132,7 +137,7 @@ const Dashboard = () => {
         setLoginStatus({ type: '', text: '' });
 
         try {
-            const response = await fetch('/api/auth/login', {
+            const response = await fetch(getApiUrl('/api/auth/login'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -176,7 +181,7 @@ const Dashboard = () => {
 
         try {
             const isEditing = !!editingProjectId;
-            const url = isEditing ? `/api/projects/${editingProjectId}` : '/api/projects';
+            const url = isEditing ? getApiUrl(`/api/projects/${editingProjectId}`) : getApiUrl('/api/projects');
             const method = isEditing ? 'PUT' : 'POST';
 
             const projectData = {
@@ -229,7 +234,7 @@ const Dashboard = () => {
     const handleDeleteProject = async (id) => {
         if (!confirm("Are you sure you want to permanently delete this project?")) return;
         try {
-            const response = await fetch(`/api/projects/${id}`, {
+            const response = await fetch(getApiUrl(`/api/projects/${id}`), {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${adminUser.token}`,
@@ -253,7 +258,7 @@ const Dashboard = () => {
 
         try {
             const isEditing = !!editingSkillId;
-            const url = isEditing ? `/api/skills/${editingSkillId}` : '/api/skills';
+            const url = isEditing ? getApiUrl(`/api/skills/${editingSkillId}`) : getApiUrl('/api/skills');
             const method = isEditing ? 'PUT' : 'POST';
 
             const response = await fetch(url, {
@@ -293,7 +298,7 @@ const Dashboard = () => {
     const handleDeleteSkill = async (id) => {
         if (!confirm("Remove this skill from your expertise records?")) return;
         try {
-            const response = await fetch(`/api/skills/${id}`, {
+            const response = await fetch(getApiUrl(`/api/skills/${id}`), {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${adminUser.token}`,
@@ -314,7 +319,7 @@ const Dashboard = () => {
     const handleDeleteMessage = async (id) => {
         if (!confirm("Are you sure you want to delete this message record?")) return;
         try {
-            const response = await fetch(`/api/contact/${id}`, {
+            const response = await fetch(getApiUrl(`/api/contact/${id}`), {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${adminUser.token}`,

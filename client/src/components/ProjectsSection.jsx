@@ -74,6 +74,14 @@ const staticProjects = [
     },
 ];
 
+const getApiUrl = (path) => {
+    if (import.meta.env.VITE_API_URL) return `${import.meta.env.VITE_API_URL}${path}`;
+    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
+        return `https://myportfolio-server.vercel.app${path}`;
+    }
+    return path;
+};
+
 const ProjectsSection = () => {
     const sectionRef = useRef(null);
     const [fetchedProjects, setFetchedProjects] = useState([]);
@@ -81,7 +89,7 @@ const ProjectsSection = () => {
     useEffect(() => {
         const loadProjects = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/projects`);
+                const response = await fetch(getApiUrl('/api/projects'));
                 if (response.ok) {
                     const data = await response.json();
                     setFetchedProjects(data);

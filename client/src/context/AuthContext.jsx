@@ -4,6 +4,8 @@ import axios from 'axios';
 // Set base URL for production
 if (import.meta.env.VITE_API_URL) {
     axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+} else if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
+    axios.defaults.baseURL = 'https://myportfolio-server.vercel.app';
 }
 
 const AuthContext = createContext();
