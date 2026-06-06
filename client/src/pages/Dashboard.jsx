@@ -375,7 +375,12 @@ const Dashboard = () => {
             });
 
             if (response.ok) {
-                showActionFeedback('success', `Direct reply dispatched successfully to ${replyingTo.email}!`);
+                const data = await response.json();
+                if (data.emailSent === false) {
+                    showActionFeedback('error', data.message || 'Saved in database, but email delivery failed due to SMTP block.');
+                } else {
+                    showActionFeedback('success', `Direct reply dispatched successfully to ${replyingTo.email}!`);
+                }
                 setReplyModalOpen(false);
                 setReplyingTo(null);
                 setReplyForm({ subject: '', message: '' });

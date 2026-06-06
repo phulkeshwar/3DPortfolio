@@ -86,14 +86,23 @@ const replyMessage = async (req, res) => {
             return;
         }
 
-        // Dispatch email to original sender
-        await sendEmail({
-            email: contact.email,
-            subject: subject,
-            message: message,
-        });
+        let emailSent = true;
+        let emailError = null;
 
-        // Save reply in the database record
+        // Dispatch email to original sender
+        try {
+            await sendEmail({
+                email: contact.email,
+                subject: subject,
+                message: message,
+            });
+        } catch (mailError) {
+            console.error('SMTP Mail dispatch error:', mailError.message);
+            emailSent = false;
+            emailError = mailError.message;
+        }
+
+        // Save reply in the database record regardless of email delivery success
         contact.replies.push({
             subject,
             message,
@@ -101,9 +110,18 @@ const replyMessage = async (req, res) => {
         });
         await contact.save();
 
-        res.status(200).json({ success: true, contact });
+        if (!emailSent) {
+            return res.status(200).json({ 
+                success: true, 
+                contact, 
+                emailSent: false,
+                message: `Reply logged in database, but email delivery failed: SMTP connection timed out. (Render Free tier blocks outbound email ports. Consider deploying the server to Vercel).` 
+            });
+        }
+
+        res.status(200).json({ success: true, contact, emailSent: true });
     } catch (error) {
-        console.error('Reply dispatch error:', error);
+        console.error('Reply handler error:', error);
         res.status(500).json({ message: error.message });
     }
 };
