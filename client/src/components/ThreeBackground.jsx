@@ -50,7 +50,7 @@ function Earth({ scrollRef, mouseRef }) {
         state.camera.position.z += (targetZ - state.camera.position.z) * 0.05;
 
         if (groupRef.current) {
-            const targetOffsetX = (typeof window !== 'undefined' && window.location.pathname === '/admin' && window.innerWidth >= 1024) ? -0.85 : 0;
+            const targetOffsetX = (typeof window !== 'undefined' && window.location.pathname === '/admin' && window.innerWidth >= 1024) ? -1.35 : 0;
             groupRef.current.position.x += (targetOffsetX - groupRef.current.position.x) * 0.04; // Smooth lerp transition
         }
 
@@ -60,7 +60,7 @@ function Earth({ scrollRef, mouseRef }) {
         state.camera.position.x += (targetCamX - state.camera.position.x) * 0.06;
         state.camera.position.y += (targetCamY - state.camera.position.y) * 0.06;
         
-        state.camera.lookAt(groupRef.current ? groupRef.current.position.x : 0, 0, 0);
+        state.camera.lookAt(0, 0, 0);
     });
 
     return (
