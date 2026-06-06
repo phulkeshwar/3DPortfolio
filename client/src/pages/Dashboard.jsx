@@ -4,6 +4,7 @@ import {
     Lock, User as UserIcon, Send, LogOut, Code, PlusCircle, Trash2, Edit, MessageSquare, 
     CheckCircle, AlertCircle, ArrowLeft, ArrowUpRight, Award, Plus, FolderGit2, Sparkles, BookOpen 
 } from 'lucide-react';
+import { gsap } from 'gsap';
 import ThreeBackground from '../components/ThreeBackground';
 
 const getApiUrl = (path) => {
@@ -61,6 +62,22 @@ const Dashboard = () => {
             }
         }
     }, []);
+
+    // GSAP Landing animations for unauthenticated sign-in page
+    useEffect(() => {
+        if (!isAuthenticated) {
+            gsap.fromTo(
+                '.admin-login-card',
+                { x: 120, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1.2, ease: 'power4.out', delay: 0.1 }
+            );
+            gsap.fromTo(
+                '.admin-left-pane-text',
+                { y: 40, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out', delay: 0.3 }
+            );
+        }
+    }, [isAuthenticated]);
 
     // 2. Fetch data once authenticated
     useEffect(() => {
@@ -330,7 +347,7 @@ const Dashboard = () => {
                     </button>
 
                     {/* Left Pane - Large spacer on desktop to showcase the 3D globe */}
-                    <div className="hidden lg:flex lg:w-1/2 p-12 flex-col justify-end">
+                    <div className="hidden lg:flex lg:w-1/2 p-12 flex-col justify-end admin-left-pane-text">
                         <div className="max-w-md pb-12">
                             <h1 className="font-display text-4xl font-black text-white mb-4 tracking-tight leading-tight">
                                 Control Center<span className="gradient-text">.</span>
@@ -342,7 +359,7 @@ const Dashboard = () => {
                     </div>
 
                     {/* Right Pane - Holds the Login Form */}
-                    <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-20 bg-slate-950/10 lg:bg-[#020617]/40 lg:backdrop-blur-sm lg:border-l lg:border-slate-800/40 min-h-screen">
+                    <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-20 bg-slate-950/10 lg:bg-[#020617]/40 lg:backdrop-blur-sm lg:border-l lg:border-slate-800/40 min-h-screen admin-login-card">
                         <div className="w-full max-w-md glass-card !rounded-3xl p-8 sm:p-10 border border-slate-800 relative overflow-hidden">
                             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary-400 via-purple-500 to-pink-500" />
                             

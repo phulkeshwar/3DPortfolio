@@ -13,6 +13,7 @@ function Earth({ scrollRef, mouseRef }) {
     const meshRef = useRef();
     const atmosphereRef = useRef();
     const cloudsRef = useRef();
+    const groupRef = useRef();
 
     // Load textures
     const [colorMap, bumpMap, specMap] = useLoader(THREE.TextureLoader, [
@@ -48,31 +49,22 @@ function Earth({ scrollRef, mouseRef }) {
         const targetZ = 3.2 - scrollProgress * 0.6;
         state.camera.position.z += (targetZ - state.camera.position.z) * 0.05;
 
+        if (groupRef.current) {
+            const targetOffsetX = (typeof window !== 'undefined' && window.location.pathname === '/admin' && window.innerWidth >= 1024) ? -0.85 : 0;
+            groupRef.current.position.x += (targetOffsetX - groupRef.current.position.x) * 0.04; // Smooth lerp transition
+        }
+
         // Mouse parallax (increased sensitivity: 0.3 -> 0.9, 0.2 -> 0.7, lerp 0.02 -> 0.06)
         const targetCamX = mouseRef.current.x * 0.9;
         const targetCamY = -mouseRef.current.y * 0.7;
         state.camera.position.x += (targetCamX - state.camera.position.x) * 0.06;
         state.camera.position.y += (targetCamY - state.camera.position.y) * 0.06;
         
-        state.camera.lookAt(offsetX, 0, 0);
+        state.camera.lookAt(groupRef.current ? groupRef.current.position.x : 0, 0, 0);
     });
 
-    const [offsetX, setOffsetX] = useState(0);
-
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
-        const handleResize = () => {
-            const isAdmin = window.location.pathname === '/admin';
-            const isDesktop = window.innerWidth >= 1024;
-            setOffsetX(isAdmin && isDesktop ? -0.85 : 0);
-        };
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initial check
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
     return (
-        <group position={[offsetX, 0, 0]}>
+        <group ref={groupRef}>
             {/* Earth */}
             <mesh ref={meshRef}>
                 <sphereGeometry args={[1, 64, 64]} />
