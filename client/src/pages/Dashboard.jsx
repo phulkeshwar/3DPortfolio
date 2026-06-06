@@ -54,6 +54,12 @@ const Dashboard = () => {
     });
     const [editingSkillId, setEditingSkillId] = useState(null);
 
+    // Direct Reply Modal State
+    const [replyModalOpen, setReplyModalOpen] = useState(false);
+    const [replyingTo, setReplyingTo] = useState(null);
+    const [replyForm, setReplyForm] = useState({ subject: '', message: '' });
+    const [isSendingReply, setIsSendingReply] = useState(false);
+
     const [actionStatus, setActionStatus] = useState({ type: '', text: '' });
 
     // 1. Auth Check on Mount
@@ -333,6 +339,55 @@ const Dashboard = () => {
             }
         } catch (error) {
             showActionFeedback('error', 'Network error removing message.');
+        }
+    };
+
+    // 8. Open Reply Modal
+    const handleOpenReplyModal = (contact) => {
+        setReplyingTo(contact);
+        setReplyForm({
+            subject: `Re: Regarding your message on Phulkeshwar Mahto's portfolio`,
+            message: `Hi ${contact.name},\n\nThank you for reaching out!\n\n`
+        });
+        setReplyModalOpen(true);
+    };
+
+    // 9. Send Email Reply
+    const handleSendReply = async (e) => {
+        e.preventDefault();
+        if (!replyForm.subject.trim() || !replyForm.message.trim()) {
+            showActionFeedback('error', 'Please fill in both the subject and response message.');
+            return;
+        }
+
+        setIsSendingReply(true);
+        try {
+            const response = await fetch(getApiUrl(`/api/contact/${replyingTo._id}/reply`), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${adminUser.token}`,
+                },
+                body: JSON.stringify({
+                    subject: replyForm.subject,
+                    message: replyForm.message
+                }),
+            });
+
+            if (response.ok) {
+                showActionFeedback('success', `Direct reply dispatched successfully to ${replyingTo.email}!`);
+                setReplyModalOpen(false);
+                setReplyingTo(null);
+                setReplyForm({ subject: '', message: '' });
+                fetchData();
+            } else {
+                const errData = await response.json();
+                showActionFeedback('error', errData.message || 'Failed to dispatch email reply.');
+            }
+        } catch (error) {
+            showActionFeedback('error', 'Network error sending direct reply.');
+        } finally {
+            setIsSendingReply(false);
         }
     };
 
@@ -881,14 +936,39 @@ const Dashboard = () => {
                                                         "{m.message}"
                                                     </p>
 
+                                                    {/* Sent replies thread */}
+                                                    {m.replies && m.replies.length > 0 && (
+                                                        <div className="mt-4 pt-4 border-t border-slate-900/60 space-y-3">
+                                                            <h4 className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                                                                <MessageSquare size={10} />
+                                                                Sent Replies ({m.replies.length})
+                                                            </h4>
+                                                            <div className="space-y-2">
+                                                                {m.replies.map((r, idx) => (
+                                                                    <div key={idx} className="bg-slate-950/40 border border-slate-900 rounded-xl p-3.5 pl-4 ml-4 relative">
+                                                                        <div className="flex justify-between items-center gap-2 mb-1.5">
+                                                                            <span className="text-[10px] font-bold text-slate-400">Subject: {r.subject}</span>
+                                                                            <span className="text-[9px] text-slate-500 font-mono">
+                                                                                {new Date(r.sentAt).toLocaleDateString()}
+                                                                            </span>
+                                                                        </div>
+                                                                        <p className="text-slate-300 text-xs whitespace-pre-wrap font-sans pl-2 border-l border-primary-400/40">
+                                                                            {r.message}
+                                                                        </p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
                                                     <div className="flex gap-3 mt-5 pt-4 border-t border-slate-900 justify-end">
-                                                        <a 
-                                                            href={`mailto:${m.email}?subject=Regarding your message on Phulkeshwar Mahto's portfolio`}
-                                                            className="inline-flex items-center gap-1 text-[10px] font-mono text-primary-400 hover:text-primary-300 transition"
+                                                        <button 
+                                                            onClick={() => handleOpenReplyModal(m)}
+                                                            className="inline-flex items-center gap-1 text-[10px] font-mono text-primary-400 hover:text-primary-300 transition bg-transparent border-0 cursor-pointer p-0"
                                                         >
                                                             Send Direct Reply
                                                             <ArrowUpRight size={10} />
-                                                        </a>
+                                                        </button>
                                                         <button 
                                                             onClick={() => handleDeleteMessage(m._id)}
                                                             className="inline-flex items-center gap-1 text-[10px] font-mono text-rose-400 hover:text-rose-300 transition"
@@ -907,6 +987,87 @@ const Dashboard = () => {
                     )}
                 </div>
             </div>
+
+            {/* Direct Reply Modal Overlay */}
+            {replyModalOpen && replyingTo && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in duration-200">
+                    <div className="w-full max-w-lg glass-card !rounded-3xl p-6 sm:p-8 border border-slate-800 relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary-400 via-purple-500 to-pink-500" />
+                        
+                        <div className="flex justify-between items-center mb-6">
+                            <h3 className="font-display text-base font-black text-white flex items-center gap-2">
+                                <MessageSquare size={15} className="text-primary-400" />
+                                Send Direct Reply
+                            </h3>
+                            <button 
+                                onClick={() => {
+                                    setReplyModalOpen(false);
+                                    setReplyingTo(null);
+                                }}
+                                className="text-slate-500 hover:text-white transition text-xs font-mono bg-transparent border-0 cursor-pointer"
+                            >
+                                ✕ Close
+                            </button>
+                        </div>
+
+                        <div className="mb-4 bg-slate-950/60 border border-slate-900 rounded-xl p-4 text-xs font-mono text-slate-400 space-y-1">
+                            <div><span className="text-slate-600">To:</span> {replyingTo.name} ({replyingTo.email})</div>
+                            <div className="line-clamp-2"><span className="text-slate-600">Original:</span> "{replyingTo.message}"</div>
+                        </div>
+
+                        <form onSubmit={handleSendReply} className="space-y-4">
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-500">
+                                    Email Subject
+                                </label>
+                                <input
+                                    type="text"
+                                    value={replyForm.subject}
+                                    onChange={(e) => setReplyForm({ ...replyForm, subject: e.target.value })}
+                                    required
+                                    placeholder="Enter email subject"
+                                    className="w-full px-4 py-2.5 rounded-xl bg-slate-950/40 border border-slate-800 focus:border-primary-400 focus:ring-1 focus:ring-primary-400 focus:outline-none text-white text-xs font-mono"
+                                />
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-500">
+                                    Message Body
+                                </label>
+                                <textarea
+                                    value={replyForm.message}
+                                    onChange={(e) => setReplyForm({ ...replyForm, message: e.target.value })}
+                                    required
+                                    rows={8}
+                                    placeholder="Write your email response..."
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-950/40 border border-slate-800 focus:border-primary-400 focus:ring-1 focus:ring-primary-400 focus:outline-none text-white text-xs font-sans leading-relaxed"
+                                />
+                            </div>
+
+                            <div className="flex gap-3 pt-2">
+                                <button
+                                    type="submit"
+                                    disabled={isSendingReply}
+                                    className="flex-grow inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-900 hover:bg-primary-400 hover:text-white font-bold text-xs rounded-xl transition duration-300 shadow-lg disabled:opacity-50"
+                                >
+                                    <Send size={12} />
+                                    {isSendingReply ? 'Sending Email...' : 'Send Reply'}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setReplyModalOpen(false);
+                                        setReplyingTo(null);
+                                    }}
+                                    className="px-6 py-3 bg-slate-950 border border-slate-800 hover:bg-slate-900 text-slate-400 hover:text-white font-bold text-xs rounded-xl transition"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

@@ -12,7 +12,17 @@ const contactSchema = mongoose.Schema({
     message: {
         type: String,
         required: true
-    }
+    },
+    replies: [
+        {
+            subject: String,
+            message: String,
+            sentAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ]
 }, {
     timestamps: true
 });

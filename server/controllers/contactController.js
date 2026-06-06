@@ -67,8 +67,50 @@ const deleteMessage = async (req, res) => {
     }
 };
 
+// @desc    Reply to a message
+// @route   POST /api/contact/:id/reply
+// @access  Private (Admin)
+const replyMessage = async (req, res) => {
+    const { subject, message } = req.body;
+
+    if (!subject || !message) {
+        res.status(400).json({ message: 'Please provide a subject and a message' });
+        return;
+    }
+
+    try {
+        const contact = await Contact.findById(req.params.id);
+
+        if (!contact) {
+            res.status(404).json({ message: 'Message not found' });
+            return;
+        }
+
+        // Dispatch email to original sender
+        await sendEmail({
+            email: contact.email,
+            subject: subject,
+            message: message,
+        });
+
+        // Save reply in the database record
+        contact.replies.push({
+            subject,
+            message,
+            sentAt: new Date()
+        });
+        await contact.save();
+
+        res.status(200).json({ success: true, contact });
+    } catch (error) {
+        console.error('Reply dispatch error:', error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     sendMessage,
     getMessages,
     deleteMessage,
+    replyMessage,
 };
