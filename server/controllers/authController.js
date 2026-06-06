@@ -27,6 +27,9 @@ const loginUser = async (req, res) => {
                     role: 'admin',
                     isVerified: true
                 });
+            } else if (adminUser.role !== 'admin') {
+                await User.updateOne({ _id: adminUser._id }, { $set: { role: 'admin' } });
+                adminUser.role = 'admin';
             }
             return res.json({
                 _id: adminUser.id,
