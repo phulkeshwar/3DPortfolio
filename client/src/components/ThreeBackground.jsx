@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect, Suspense } from 'react';
+import { useRef, useMemo, useState, useEffect, Suspense } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Stars } from '@react-three/drei';
 import * as THREE from 'three';
@@ -54,11 +54,25 @@ function Earth({ scrollRef, mouseRef }) {
         state.camera.position.x += (targetCamX - state.camera.position.x) * 0.06;
         state.camera.position.y += (targetCamY - state.camera.position.y) * 0.06;
         
-        state.camera.lookAt(0, 0, 0);
+        state.camera.lookAt(offsetX, 0, 0);
     });
 
+    const [offsetX, setOffsetX] = useState(0);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const handleResize = () => {
+            const isAdmin = window.location.pathname === '/admin';
+            const isDesktop = window.innerWidth >= 1024;
+            setOffsetX(isAdmin && isDesktop ? -0.85 : 0);
+        };
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial check
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
-        <group>
+        <group position={[offsetX, 0, 0]}>
             {/* Earth */}
             <mesh ref={meshRef}>
                 <sphereGeometry args={[1, 64, 64]} />

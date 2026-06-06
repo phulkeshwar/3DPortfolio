@@ -9,8 +9,16 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+const allowedOrigins = [
+    process.env.CLIENT_URL,
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://myportfolio-client.vercel.app',
+    'https://phulkeshwar.vercel.app'
+].filter(Boolean);
+
 app.use(cors({
-    origin: process.env.CLIENT_URL || '*',
+    origin: allowedOrigins,
     credentials: true
 }));
 

@@ -6,6 +6,11 @@ import {
 } from 'lucide-react';
 import ThreeBackground from '../components/ThreeBackground';
 
+const getApiUrl = (path) => {
+    const baseUrl = import.meta.env.VITE_API_URL || '';
+    return baseUrl ? `${baseUrl}${path}` : path;
+};
+
 const Dashboard = () => {
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -73,7 +78,7 @@ const Dashboard = () => {
                 },
             };
 
-            const projectsRes = await fetch('/api/projects');
+            const projectsRes = await fetch(getApiUrl('/api/projects'));
             const projectsData = await projectsRes.json();
             if (projectsRes.ok) setProjects(projectsData);
 
