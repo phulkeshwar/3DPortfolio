@@ -65,6 +65,15 @@ const skillCategories = [
             { name: 'Render', icon: 'devicon-render-plain colored' },
         ],
     },
+    {
+        title: 'Creative & Content',
+        color: 'text-pink-400',
+        dotColor: 'bg-pink-400',
+        skills: [
+            { name: 'Video Editing', emoji: '🎬' },
+            { name: 'Content Creation', emoji: '✍️' },
+        ],
+    },
 ];
 
 const ExpertiseSection = () => {

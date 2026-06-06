@@ -8,9 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const stats = [
     { value: 8.0, suffix: '', label: 'Academic CGPA', isDecimal: true },
-    { value: 6, suffix: '+', label: 'Major Projects', isDecimal: false },
+    { value: 6, suffix: '+', label: 'Projects', isDecimal: false },
     { value: 26, suffix: '+', label: 'GitHub Repositories', isDecimal: false },
-    { value: 2, suffix: '', label: 'Hackathon Awards', isDecimal: false },
+    { value: 2, suffix: '', label: 'Hackathon Participation', isDecimal: false },
 ];
 
 function AnimatedCounter({ target, suffix = '', isDecimal = false, inView }) {
@@ -149,7 +149,7 @@ const AboutSection = () => {
                                 The Journey
                             </h3>
                             <p className="text-slate-400 leading-relaxed">
-                                I am a highly driven full-stack developer specializing in the{' '}
+                                I am a full-stack developer specializing in the{' '}
                                 <span className="text-white font-medium">MERN stack</span> and real-time backend
                                 architecture. I specialize in writing clean, scalable code and solving complex
                                 performance bottlenecks for modern web platforms.
@@ -180,7 +180,7 @@ const AboutSection = () => {
                             </div>
                             <div className="flex items-center gap-2 mt-1 text-slate-400 text-sm">
                                 <Target size={13} />
-                                <span>Current Semester: 4th</span>
+                                <span>Current Semester: 5th</span>
                             </div>
                         </div>
 
