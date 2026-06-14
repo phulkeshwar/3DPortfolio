@@ -48,21 +48,31 @@ const SideNav = () => {
             }}
         >
             {/* Logo */}
-            <button
-                onClick={() => scrollTo('hero')}
+            <a
+                href="#hero"
+                id="sidenav-logo"
+                onClick={(e) => {
+                    e.preventDefault();
+                    scrollTo('hero');
+                }}
                 className="nav-logo-text font-display font-extrabold text-sm text-white tracking-widest mb-2"
                 style={{ writingMode: 'vertical-lr' }}
             >
                 PM.
-            </button>
+            </a>
 
             {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeSection === item.id;
                 return (
-                    <button
+                    <a
                         key={item.id}
-                        onClick={() => scrollTo(item.id)}
+                        href={`#${item.id}`}
+                        id={`sidenav-link-${item.id}`}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            scrollTo(item.id);
+                        }}
                         className={`flex flex-col items-center gap-1.5 transition-all duration-300 group cursor-pointer ${
                             isActive ? 'text-primary-400' : 'text-slate-500 hover:text-primary-300'
                         }`}
@@ -78,7 +88,7 @@ const SideNav = () => {
                         >
                             {item.label}
                         </span>
-                    </button>
+                    </a>
                 );
             })}
         </nav>

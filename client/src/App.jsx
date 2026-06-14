@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SEO from './components/SEO';
 import ThreeBackground from './components/ThreeBackground';
 import ScrollProgress from './components/ScrollProgress';
 import SideNav from './components/SideNav';
@@ -27,6 +28,13 @@ function PortfolioLayout() {
 
     return (
         <>
+            <SEO 
+                title="Phulkeshwar Mahto | Software Engineer & MERN Specialist" 
+                description="Phulkeshwar Mahto — Software Engineer & MERN Stack Specialist. Building high-performance, real-time web applications and scalable data architectures." 
+                robots="index, follow" 
+                canonical="https://phulkeshwar.vercel.app/" 
+            />
+
             {/* Fixed 3D Background */}
             <ThreeBackground />
 
@@ -53,7 +61,17 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<PortfolioLayout />} />
-                <Route path="/admin" element={<Dashboard />} />
+                <Route path="/admin" element={
+                    <>
+                        <SEO 
+                            title="Admin Dashboard | Phulkeshwar Mahto Portfolio" 
+                            description="Secure administrator command center for managing showcase content."
+                            robots="noindex, nofollow" 
+                            canonical="https://phulkeshwar.vercel.app/admin" 
+                        />
+                        <Dashboard />
+                    </>
+                } />
             </Routes>
         </Router>
     );

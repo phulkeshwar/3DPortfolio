@@ -453,12 +453,13 @@ const Dashboard = () => {
                                 )}
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">
+                                    <label htmlFor="login-username" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">
                                         Username / Email
                                     </label>
                                     <div className="relative">
                                         <UserIcon size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                                         <input
+                                            id="login-username"
                                             type="text"
                                             value={loginData.username}
                                             onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
@@ -471,12 +472,13 @@ const Dashboard = () => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">
+                                    <label htmlFor="login-password" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400">
                                         Access Password
                                     </label>
                                     <div className="relative">
                                         <Lock size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                                         <input
+                                            id="login-password"
                                             type="password"
                                             value={loginData.password}
                                             onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
@@ -489,6 +491,7 @@ const Dashboard = () => {
                                 </div>
 
                                 <button
+                                    id="login-submit-button"
                                     type="submit"
                                     disabled={isLoggingIn}
                                     className="w-full mt-2 group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-white text-gray-900 font-bold text-sm rounded-xl hover:bg-primary-400 hover:text-white transition-all duration-300 hover:-translate-y-0.5 shadow-xl shadow-white/5 disabled:opacity-50 disabled:pointer-events-none"
