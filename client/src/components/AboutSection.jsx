@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GraduationCap, Briefcase, MapPin, Target, Download } from 'lucide-react';
-import ProfilePdf from '../assets/Profile.pdf';
+import PhulkeshwarResume from '../assets/PhulkeshwarResume.pdf';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -186,7 +186,7 @@ const AboutSection = () => {
 
                         <div className="bio-block">
                             <a
-                                href={ProfilePdf}
+                                href={PhulkeshwarResume}
                                 download="Phulkeshwar_Mahto_Resume.pdf"
                                 className="group inline-flex items-center gap-2.5 px-6 py-3 bg-white text-gray-900 font-bold text-sm rounded-lg hover:bg-primary-400 hover:text-white transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-white/10 hover:shadow-primary-400/20"
                             >

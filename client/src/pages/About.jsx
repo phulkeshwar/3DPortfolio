@@ -1,5 +1,5 @@
 import profilePic from '../assets/me2.jpg';
-import ProfilePdf from '../assets/Profile.pdf';
+import PhulkeshwarResume from '../assets/PhulkeshwarResume.pdf';
 
 const About = () => {
     return (
@@ -19,8 +19,8 @@ const About = () => {
 
                     <div className="pt-6">
                         <a
-                            href={ProfilePdf}
-                            download="Profile.pdf"
+                            href={PhulkeshwarResume}
+                            download="Phulkeshwar_Mahto_Resume.pdf"
                             className="inline-block px-8 py-3 bg-amber-400 text-gray-900 font-bold rounded-lg hover:bg-amber-500 transition shadow-md"
                         >
                             Resume

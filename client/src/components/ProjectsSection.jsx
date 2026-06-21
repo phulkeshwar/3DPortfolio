@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Trophy, Zap, Globe, ShoppingCart, Users, Video } from 'lucide-react';
+import { ExternalLink, Trophy, Zap, Globe, ShoppingCart, Users, Video, Calculator, Percent, Briefcase, Code, Key } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -71,6 +71,61 @@ const staticProjects = [
         accentBorder: 'group-hover:border-sky-400/40',
         githubLink: 'https://github.com/phulkeshwar/PeekPost',
         liveLink: 'https://peekpost.vercel.app',
+    },
+    {
+        title: 'GST Invoice Calculator',
+        description:
+            'A high-performance financial utility for generating real-time GST-compliant invoices. Features instant multi-tier tax computations, dynamic invoice preview, and optimized client-side calculation pipelines.',
+        tech: ['React', 'Tailwind CSS', 'Vite'],
+        icon: Calculator,
+        accent: 'from-cyan-400 to-blue-500',
+        accentBorder: 'group-hover:border-cyan-400/40',
+        githubLink: 'https://github.com/phulkeshwar/GSTcalculator',
+        liveLink: 'https://gs-tcalculator.vercel.app',
+    },
+    {
+        title: 'EMI Loan Calculator',
+        description:
+            'Advanced amortization planner with interactive visualization. Computes reducing-balance loan interest, dynamic principal/interest breakdowns, and outputs real-time payment schedule tables.',
+        tech: ['React', 'Chart.js', 'Tailwind CSS', 'Vite'],
+        icon: Percent,
+        accent: 'from-emerald-400 to-teal-500',
+        accentBorder: 'group-hover:border-emerald-400/40',
+        githubLink: 'https://github.com/phulkeshwar/EMIcalculator',
+        liveLink: 'https://emicalculator-vert.vercel.app',
+    },
+    {
+        title: 'Resume Builder',
+        description:
+            'Dynamic resume builder with real-time editing and PDF generation. Features dynamic single-page resume templates, custom theme customization, and client-side rendering capabilities.',
+        tech: ['React', 'CSS', 'HTML5 Canvas'],
+        icon: Briefcase,
+        accent: 'from-amber-400 to-orange-500',
+        accentBorder: 'group-hover:border-amber-400/40',
+        githubLink: 'https://github.com/phulkeshwar/ResumeBuilder',
+        liveLink: 'https://resume-builder-fawn-two.vercel.app',
+    },
+    {
+        title: 'JSON Formatter + Validator',
+        description:
+            'A robust developer sandbox for parsing, validating, and beautifying complex JSON data. Built with real-time linting feedback, syntax error detection, and nested object collapsibility.',
+        tech: ['React', 'CSS', 'AST Parser'],
+        icon: Code,
+        accent: 'from-violet-400 to-purple-500',
+        accentBorder: 'group-hover:border-violet-400/40',
+        githubLink: 'https://github.com/phulkeshwar/JSONformatter',
+        liveLink: 'https://jso-nformatter-ebon.vercel.app',
+    },
+    {
+        title: 'Password Generator',
+        description:
+            'Cryptographically secure string utility for credential generation. Implemented dynamic entropy calculations, custom constraint filtering (alphanumeric, symbols), and clipboard API integration.',
+        tech: ['React', 'JS Crypto API', 'Tailwind CSS'],
+        icon: Key,
+        accent: 'from-red-400 to-pink-500',
+        accentBorder: 'group-hover:border-red-400/40',
+        githubLink: 'https://github.com/phulkeshwar/PasswordGenerator',
+        liveLink: 'https://password-generator-tau-sooty.vercel.app',
     },
 ];
 
