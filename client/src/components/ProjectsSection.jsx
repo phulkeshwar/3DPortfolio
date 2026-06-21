@@ -1,133 +1,13 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Trophy, Zap, Globe, ShoppingCart, Users, Video, Calculator, Percent, Briefcase, Code, Key } from 'lucide-react';
+import { ExternalLink, Globe } from 'lucide-react';
+import { staticProjects } from '../data/projects';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const staticProjects = [
-    {
-        title: 'Call.io',
-        description:
-            'Real-time anonymous WebRTC video calling architecture. Solved critical N² signaling bottlenecks utilizing debounced presence broadcasting and a scalable Redis pub/sub adapter.',
-        tech: ['WebRTC', 'Redis', 'Socket.io', 'Node'],
-        icon: Video,
-        accent: 'from-cyan-500 to-blue-600',
-        accentBorder: 'group-hover:border-cyan-400/40',
-        githubLink: 'https://github.com/phulkeshwar/Call.io',
-        liveLink: 'https://callrandom.vercel.app/',
-    },
-    {
-        title: 'MedScribe AI',
-        description:
-            "Clinical assistant platform. Engineered a Doctor Mode for automated SOAP notes and Patient Mode for OCR prescription analysis utilizing Google's Gemma 4 27B model.",
-        tech: ['MERN', 'Gemma 4 API', 'Google AI Studio'],
-        icon: Trophy,
-        accent: 'from-amber-400 to-orange-500',
-        accentBorder: 'group-hover:border-amber-400/40',
-        githubLink: 'https://github.com/phulkeshwar/MedScribe-AI',
-        liveLink: 'https://medscribe-ai-ruby.vercel.app/',
-    },
-    {
-        title: 'VolunteerSync',
-        description:
-            'NGO volunteer coordination matrix. Features live interactive map tracking (Leaflet.js) and intelligent task delegation powered by Gemini API, synced entirely via WebSockets.',
-        tech: ['Socket.io', 'Gemini API', 'Leaflet.js'],
-        icon: Users,
-        accent: 'from-emerald-400 to-teal-500',
-        accentBorder: 'group-hover:border-emerald-400/40',
-        githubLink: 'https://github.com/phulkeshwar/VolunteerSync',
-        liveLink: 'https://volunteersync.vercel.app',
-    },
-    {
-        title: 'NIAMT Racing',
-        description:
-            'Developed the official web presence for the university Formula Student team. Optimized for strict SEO standards, served via Cloudinary CDN, with a custom backend hosted on Railway.',
-        tech: ['React', 'Node.js', 'Cloudinary', 'Vercel'],
-        icon: Zap,
-        accent: 'from-red-400 to-pink-500',
-        accentBorder: 'group-hover:border-red-400/40',
-        githubLink: 'https://github.com/phulkeshwar/niamt-racing',
-        liveLink: 'https://niamtracing.vercel.app/',
-    },
-    {
-        title: 'GramBazaar',
-        description:
-            'Full-stack enterprise e-commerce build. Features complex Mongoose data modeling for product catalogs, secure cart sessions, stateful order tracking, and a seller management dashboard.',
-        tech: ['MongoDB', 'Express', 'React', 'Node'],
-        icon: ShoppingCart,
-        accent: 'from-violet-400 to-purple-500',
-        accentBorder: 'group-hover:border-violet-400/40',
-        githubLink: 'https://github.com/phulkeshwar/GramBazaar',
-        liveLink: 'https://garambazaar.vercel.app/',
-    },
-    {
-        title: 'PeekPost',
-        description:
-            'Scalable instagram clone handling complex relational data. Implemented a strict Mongoose schema to manage infinite-scroll feeds, nested comments, and bidirectional follow graphs.',
-        tech: ['React', 'Node', 'Mongoose', 'MongoDB'],
-        icon: Globe,
-        accent: 'from-sky-400 to-indigo-500',
-        accentBorder: 'group-hover:border-sky-400/40',
-        githubLink: 'https://github.com/phulkeshwar/PeekPost',
-        liveLink: 'https://peekpost.vercel.app',
-    },
-    {
-        title: 'GST Invoice Calculator',
-        description:
-            'A high-performance financial utility for generating real-time GST-compliant invoices. Features instant multi-tier tax computations, dynamic invoice preview, and optimized client-side calculation pipelines.',
-        tech: ['React', 'Tailwind CSS', 'Vite'],
-        icon: Calculator,
-        accent: 'from-cyan-400 to-blue-500',
-        accentBorder: 'group-hover:border-cyan-400/40',
-        githubLink: 'https://github.com/phulkeshwar/GSTcalculator',
-        liveLink: 'https://gs-tcalculator.vercel.app',
-    },
-    {
-        title: 'EMI Loan Calculator',
-        description:
-            'Advanced amortization planner with interactive visualization. Computes reducing-balance loan interest, dynamic principal/interest breakdowns, and outputs real-time payment schedule tables.',
-        tech: ['React', 'Chart.js', 'Tailwind CSS', 'Vite'],
-        icon: Percent,
-        accent: 'from-emerald-400 to-teal-500',
-        accentBorder: 'group-hover:border-emerald-400/40',
-        githubLink: 'https://github.com/phulkeshwar/EMIcalculator',
-        liveLink: 'https://emicalculator-vert.vercel.app',
-    },
-    {
-        title: 'Resume Builder',
-        description:
-            'Dynamic resume builder with real-time editing and PDF generation. Features dynamic single-page resume templates, custom theme customization, and client-side rendering capabilities.',
-        tech: ['React', 'CSS', 'HTML5 Canvas'],
-        icon: Briefcase,
-        accent: 'from-amber-400 to-orange-500',
-        accentBorder: 'group-hover:border-amber-400/40',
-        githubLink: 'https://github.com/phulkeshwar/ResumeBuilder',
-        liveLink: 'https://resume-builder-fawn-two.vercel.app',
-    },
-    {
-        title: 'JSON Formatter + Validator',
-        description:
-            'A robust developer sandbox for parsing, validating, and beautifying complex JSON data. Built with real-time linting feedback, syntax error detection, and nested object collapsibility.',
-        tech: ['React', 'CSS', 'AST Parser'],
-        icon: Code,
-        accent: 'from-violet-400 to-purple-500',
-        accentBorder: 'group-hover:border-violet-400/40',
-        githubLink: 'https://github.com/phulkeshwar/JSONformatter',
-        liveLink: 'https://jso-nformatter-ebon.vercel.app',
-    },
-    {
-        title: 'Password Generator',
-        description:
-            'Cryptographically secure string utility for credential generation. Implemented dynamic entropy calculations, custom constraint filtering (alphanumeric, symbols), and clipboard API integration.',
-        tech: ['React', 'JS Crypto API', 'Tailwind CSS'],
-        icon: Key,
-        accent: 'from-red-400 to-pink-500',
-        accentBorder: 'group-hover:border-red-400/40',
-        githubLink: 'https://github.com/phulkeshwar/PasswordGenerator',
-        liveLink: 'https://password-generator-tau-sooty.vercel.app',
-    },
-];
+// staticProjects is now imported from ../data/projects
 
 const getApiUrl = (path) => {
     if (import.meta.env.VITE_API_URL) return `${import.meta.env.VITE_API_URL}${path}`;
@@ -281,7 +161,7 @@ const ProjectsSection = () => {
 
                 {/* Projects Grid */}
                 <div className="grid md:grid-cols-2 gap-6">
-                    {displayedProjects.map((project, idx) => {
+                    {displayedProjects.slice(0, 6).map((project, idx) => {
                         const Icon = project.icon;
                         return (
                             <div
@@ -358,6 +238,17 @@ const ProjectsSection = () => {
                             </div>
                         );
                     })}
+                </div>
+
+                {/* See More Projects CTA */}
+                <div className="flex justify-center mt-14">
+                    <Link
+                        to="/projects"
+                        className="group inline-flex items-center gap-2.5 px-8 py-3.5 bg-slate-900/40 hover:bg-slate-900 border border-slate-800 text-slate-300 hover:text-white rounded-xl text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-black/20 hover:border-slate-700/50"
+                    >
+                        See More Projects
+                        <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </Link>
                 </div>
             </div>
         </section>

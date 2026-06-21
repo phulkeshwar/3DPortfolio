@@ -12,6 +12,7 @@ import ExpertiseSection from './components/ExpertiseSection';
 import ProjectsSection from './components/ProjectsSection';
 import ContactSection from './components/ContactSection';
 import Dashboard from './pages/Dashboard';
+import Projects from './pages/Projects';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,6 +62,17 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<PortfolioLayout />} />
+                <Route path="/projects" element={
+                    <>
+                        <SEO 
+                            title="Sandbox Portfolio | Phulkeshwar Mahto Showcase" 
+                            description="Browse the complete repository of projects and web experiments designed and developed by Phulkeshwar Mahto."
+                            robots="index, follow" 
+                            canonical="https://phulkeshwar.vercel.app/projects" 
+                        />
+                        <Projects />
+                    </>
+                } />
                 <Route path="/admin" element={
                     <>
                         <SEO 
