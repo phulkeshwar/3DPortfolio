@@ -39,13 +39,13 @@ const newProjects = [
         githubLink: 'https://github.com/phulkeshwar/DSATracker',
         liveLink: 'https://striverdsatracker.vercel.app/'
     },
-    {
-        title: 'Business Portfolio',
-        description: 'A highly tailored professional landing page showcasing corporate services, team profiles, and client case studies with interactive layout transitions.',
-        techStack: ['React', 'Tailwind CSS', 'Vite'],
-        githubLink: 'https://github.com/phulkeshwar/bussiness-portfolio-one',
-        liveLink: 'https://bussiness-portfolio-one.vercel.app/'
-    },
+    // {
+    //     title: 'Business Portfolio',
+    //     description: 'A highly tailored professional landing page showcasing corporate services, team profiles, and client case studies with interactive layout transitions.',
+    //     techStack: ['React', 'Tailwind CSS', 'Vite'],
+    //     githubLink: 'https://github.com/phulkeshwar/bussiness-portfolio-one',
+    //     liveLink: 'https://bussiness-portfolio-one.vercel.app/'
+    // },
     {
         title: 'VolunteerSync',
         description: 'NGO volunteer coordination matrix. Features live interactive map tracking (Leaflet.js) and intelligent task delegation powered by Gemini API, synced entirely via WebSockets.',

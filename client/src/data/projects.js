@@ -64,18 +64,18 @@ export const staticProjects = [
         liveLink: 'https://striverdsatracker.vercel.app/',
         category: 'React'
     },
-    {
-        title: 'Business Portfolio',
-        description:
-            'A highly tailored professional landing page showcasing corporate services, team profiles, and client case studies with interactive layout transitions.',
-        tech: ['React', 'Tailwind CSS', 'Vite'],
-        icon: Briefcase,
-        accent: 'from-sky-400 to-indigo-500',
-        accentBorder: 'group-hover:border-sky-400/40',
-        githubLink: 'https://github.com/phulkeshwar/bussiness-portfolio-one',
-        liveLink: 'https://bussiness-portfolio-one.vercel.app/',
-        category: 'React'
-    },
+    // {
+    //     title: 'Business Portfolio',
+    //     description:
+    //         'A highly tailored professional landing page showcasing corporate services, team profiles, and client case studies with interactive layout transitions.',
+    //     tech: ['React', 'Tailwind CSS', 'Vite'],
+    //     icon: Briefcase,
+    //     accent: 'from-sky-400 to-indigo-500',
+    //     accentBorder: 'group-hover:border-sky-400/40',
+    //     githubLink: 'https://github.com/phulkeshwar/bussiness-portfolio-one',
+    //     liveLink: 'https://bussiness-portfolio-one.vercel.app/',
+    //     category: 'React'
+    // },
     {
         title: 'VolunteerSync',
         description:
