@@ -100,42 +100,42 @@ export const staticProjects = [
         liveLink: 'https://peek-post2.vercel.app/',
         category: 'Full-Stack'
     },
-    {
-        title: 'Media Extractor Pro',
-        description:
-            'A streamlined media extraction utility. Features instant video/audio stream processing, parsing of remote links, and rapid download pipelines.',
-        tech: ['React', 'Node.js', 'Express', 'Axios'],
-        icon: Download,
-        accent: 'from-pink-400 to-red-500',
-        accentBorder: 'group-hover:border-pink-400/40',
-        githubLink: 'https://github.com/phulkeshwar/MediaExtractorPro',
-        liveLink: 'https://mediaextractorpro.vercel.app/',
-        category: 'Utilities'
-    },
-    {
-        title: 'Focus Logger',
-        description:
-            'Interactive productivity tracker and session logger. Developed for goal-oriented scheduling, dynamic task duration logs, and daily execution metrics.',
-        tech: ['React', 'Tailwind CSS', 'Vite'],
-        icon: BookOpen,
-        accent: 'from-cyan-400 to-blue-500',
-        accentBorder: 'group-hover:border-cyan-400/40',
-        githubLink: 'https://github.com/phulkeshwar/FocusLogger',
-        liveLink: 'https://focuslogger.vercel.app/',
-        category: 'Utilities'
-    },
-    {
-        title: 'LinkedIn Job Description Saver',
-        description:
-            'Lightweight utility tool to organize, bookmark, and save LinkedIn job postings and descriptions. Built for seamless job application tracking and indexing.',
-        tech: ['React', 'LocalStorage', 'Tailwind CSS'],
-        icon: Lock,
-        accent: 'from-violet-400 to-purple-500',
-        accentBorder: 'group-hover:border-violet-400/40',
-        githubLink: 'https://github.com/phulkeshwar/LinkedInJobDescriptionSaver',
-        liveLink: 'https://linkedinjobdescriptionsaver.vercel.app/',
-        category: 'Utilities'
-    },
+    // {
+    //     title: 'Media Extractor Pro',
+    //     description:
+    //         'A streamlined media extraction utility. Features instant video/audio stream processing, parsing of remote links, and rapid download pipelines.',
+    //     tech: ['React', 'Node.js', 'Express', 'Axios'],
+    //     icon: Download,
+    //     accent: 'from-pink-400 to-red-500',
+    //     accentBorder: 'group-hover:border-pink-400/40',
+    //     githubLink: 'https://github.com/phulkeshwar/MediaExtractorPro',
+    //     liveLink: 'https://mediaextractorpro.vercel.app/',
+    //     category: 'Utilities'
+    // },
+    // {
+    //     title: 'Focus Logger',
+    //     description:
+    //         'Interactive productivity tracker and session logger. Developed for goal-oriented scheduling, dynamic task duration logs, and daily execution metrics.',
+    //     tech: ['React', 'Tailwind CSS', 'Vite'],
+    //     icon: BookOpen,
+    //     accent: 'from-cyan-400 to-blue-500',
+    //     accentBorder: 'group-hover:border-cyan-400/40',
+    //     githubLink: 'https://github.com/phulkeshwar/FocusLogger',
+    //     liveLink: 'https://focuslogger.vercel.app/',
+    //     category: 'Utilities'
+    // },
+    // {
+    //     title: 'LinkedIn Job Description Saver',
+    //     description:
+    //         'Lightweight utility tool to organize, bookmark, and save LinkedIn job postings and descriptions. Built for seamless job application tracking and indexing.',
+    //     tech: ['React', 'LocalStorage', 'Tailwind CSS'],
+    //     icon: Lock,
+    //     accent: 'from-violet-400 to-purple-500',
+    //     accentBorder: 'group-hover:border-violet-400/40',
+    //     githubLink: 'https://github.com/phulkeshwar/LinkedInJobDescriptionSaver',
+    //     liveLink: 'https://linkedinjobdescriptionsaver.vercel.app/',
+    //     category: 'Utilities'
+    // },
     {
         title: '3D Portfolio',
         description:

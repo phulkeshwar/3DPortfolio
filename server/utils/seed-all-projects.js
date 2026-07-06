@@ -60,27 +60,27 @@ const newProjects = [
         githubLink: 'https://github.com/phulkeshwar/PeekPost',
         liveLink: 'https://peek-post2.vercel.app/'
     },
-    {
-        title: 'Media Extractor Pro',
-        description: 'A streamlined media extraction utility. Features instant video/audio stream processing, parsing of remote links, and rapid download pipelines.',
-        techStack: ['React', 'Node.js', 'Express', 'Axios'],
-        githubLink: 'https://github.com/phulkeshwar/MediaExtractorPro',
-        liveLink: 'https://mediaextractorpro.vercel.app/'
-    },
-    {
-        title: 'Focus Logger',
-        description: 'Interactive productivity tracker and session logger. Developed for goal-oriented scheduling, dynamic task duration logs, and daily execution metrics.',
-        techStack: ['React', 'Tailwind CSS', 'Vite'],
-        githubLink: 'https://github.com/phulkeshwar/FocusLogger',
-        liveLink: 'https://focuslogger.vercel.app/'
-    },
-    {
-        title: 'LinkedIn Job Description Saver',
-        description: 'Lightweight utility tool to organize, bookmark, and save LinkedIn job postings and descriptions. Built for seamless job application tracking and indexing.',
-        techStack: ['React', 'LocalStorage', 'Tailwind CSS'],
-        githubLink: 'https://github.com/phulkeshwar/LinkedInJobDescriptionSaver',
-        liveLink: 'https://linkedinjobdescriptionsaver.vercel.app/'
-    },
+    // {
+    //     title: 'Media Extractor Pro',
+    //     description: 'A streamlined media extraction utility. Features instant video/audio stream processing, parsing of remote links, and rapid download pipelines.',
+    //     techStack: ['React', 'Node.js', 'Express', 'Axios'],
+    //     githubLink: 'https://github.com/phulkeshwar/MediaExtractorPro',
+    //     liveLink: 'https://mediaextractorpro.vercel.app/'
+    // },
+    // {
+    //     title: 'Focus Logger',
+    //     description: 'Interactive productivity tracker and session logger. Developed for goal-oriented scheduling, dynamic task duration logs, and daily execution metrics.',
+    //     techStack: ['React', 'Tailwind CSS', 'Vite'],
+    //     githubLink: 'https://github.com/phulkeshwar/FocusLogger',
+    //     liveLink: 'https://focuslogger.vercel.app/'
+    // },
+    // {
+    //     title: 'LinkedIn Job Description Saver',
+    //     description: 'Lightweight utility tool to organize, bookmark, and save LinkedIn job postings and descriptions. Built for seamless job application tracking and indexing.',
+    //     techStack: ['React', 'LocalStorage', 'Tailwind CSS'],
+    //     githubLink: 'https://github.com/phulkeshwar/LinkedInJobDescriptionSaver',
+    //     liveLink: 'https://linkedinjobdescriptionsaver.vercel.app/'
+    // },
     {
         title: '3D Portfolio',
         description: 'The previous iterations and core designs of my interactive 3D developer showcase, built to highlight custom WebGL/Three.js assets.',
