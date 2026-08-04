@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Globe } from 'lucide-react';
 import { staticProjects } from '../data/projects';
 import { getApiUrl } from '../api/client';
+import ProjectIcon from './ProjectIcon';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -155,7 +156,6 @@ const ProjectsSection = () => {
                 {/* Projects Grid */}
                 <div className="grid md:grid-cols-2 gap-6">
                     {displayedProjects.slice(0, 6).map((project, idx) => {
-                        const Icon = project.icon;
                         return (
                             <div
                                 key={idx}
@@ -168,9 +168,7 @@ const ProjectsSection = () => {
                                 {/* Header */}
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${project.accent} flex items-center justify-center opacity-80`}>
-                                            <Icon size={18} className="text-white" />
-                                        </div>
+                                        <ProjectIcon project={project} className="w-10 h-10 rounded-xl" iconSize={18} />
                                         <div>
                                             <h3 className="text-xl font-bold text-white group-hover:text-primary-300 transition-colors">
                                                 {project.title}

@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import ThreeBackground from '../components/ThreeBackground';
 import { staticProjects } from '../data/projects';
 import { getApiUrl } from '../api/client';
+import ProjectIcon from '../components/ProjectIcon';
 
 const categories = ['All', 'Full-Stack', 'React', 'Utilities', 'Calculators'];
 
@@ -238,7 +239,6 @@ const Projects = () => {
                         Array.from({ length: 6 }).map((_, i) => <ProjectSkeletonCard key={i} />)
                     ) : (
                         filteredProjects.map((project, idx) => {
-                            const Icon = project.icon;
                             return (
                                 <div
                                     key={idx}
@@ -251,9 +251,7 @@ const Projects = () => {
                                     {/* Header */}
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex items-center gap-3">
-                                            <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${project.accent} flex items-center justify-center opacity-85`}>
-                                                <Icon size={16} className="text-white" aria-hidden="true" />
-                                            </div>
+                                            <ProjectIcon project={project} className="w-9 h-9 rounded-xl" iconSize={16} />
                                             <div>
                                                 <h3 className="text-lg font-bold text-white group-hover:text-primary-300 transition-colors leading-tight">
                                                     {project.title}
