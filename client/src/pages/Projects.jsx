@@ -1,30 +1,60 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Search, Globe, ExternalLink } from 'lucide-react';
 import { gsap } from 'gsap';
 import ThreeBackground from '../components/ThreeBackground';
 import { staticProjects } from '../data/projects';
-
-const getApiUrl = (path) => {
-    if (import.meta.env.VITE_API_URL) return `${import.meta.env.VITE_API_URL}${path}`;
-    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
-        return `https://portfolio-backend-980z.onrender.com${path}`;
-    }
-    return path;
-};
+import { getApiUrl } from '../api/client';
 
 const categories = ['All', 'Full-Stack', 'React', 'Utilities', 'Calculators'];
 
+const ProjectSkeletonCard = () => (
+    <div className="glass-card !rounded-2xl p-6 flex flex-col h-60 border border-slate-900 animate-pulse">
+        <div className="flex items-center gap-3 mb-4">
+            <div className="w-9 h-9 rounded-xl bg-slate-800" />
+            <div className="h-5 bg-slate-800 rounded w-2/3" />
+        </div>
+        <div className="space-y-2 mb-6">
+            <div className="h-3 bg-slate-800/80 rounded w-full" />
+            <div className="h-3 bg-slate-800/80 rounded w-4/5" />
+        </div>
+        <div className="flex gap-2 mt-auto">
+            <div className="h-4 bg-slate-800 rounded w-12" />
+            <div className="h-4 bg-slate-800 rounded w-16" />
+        </div>
+    </div>
+);
+
 const Projects = () => {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const pageRef = useRef(null);
     const [fetchedProjects, setFetchedProjects] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [isLoading, setIsLoading] = useState(true);
+
+    const searchQuery = searchParams.get('search') || '';
+    const selectedCategory = searchParams.get('category') || 'All';
+
+    const setSearchQuery = (val) => {
+        setSearchParams(prev => {
+            if (val) prev.set('search', val);
+            else prev.delete('search');
+            return prev;
+        }, { replace: true });
+    };
+
+    const setSelectedCategory = (cat) => {
+        setSearchParams(prev => {
+            if (cat && cat !== 'All') prev.set('category', cat);
+            else prev.delete('category');
+            return prev;
+        }, { replace: true });
+    };
 
     // 1. Fetch dynamic projects from DB
     useEffect(() => {
         const loadProjects = async () => {
+            setIsLoading(true);
             try {
                 const response = await fetch(getApiUrl('/api/projects'));
                 if (response.ok) {
@@ -33,6 +63,8 @@ const Projects = () => {
                 }
             } catch (error) {
                 console.error('Failed to load dynamic project links from backend:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
         loadProjects();
@@ -201,79 +233,85 @@ const Projects = () => {
                 </div>
 
                 {/* Projects Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredProjects.map((project, idx) => {
-                        const Icon = project.icon;
-                        return (
-                            <div
-                                key={idx}
-                                className="project-card-full group glass-card !rounded-2xl p-6 flex flex-col h-full card-shine relative overflow-hidden border border-slate-850 hover:border-slate-700/50"
-                                style={{ perspective: '1000px' }}
-                            >
-                                {/* Top gradient line */}
-                                <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${project.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" aria-live="polite">
+                    {isLoading ? (
+                        Array.from({ length: 6 }).map((_, i) => <ProjectSkeletonCard key={i} />)
+                    ) : (
+                        filteredProjects.map((project, idx) => {
+                            const Icon = project.icon;
+                            return (
+                                <div
+                                    key={idx}
+                                    className="project-card-full group glass-card !rounded-2xl p-6 flex flex-col h-full card-shine relative overflow-hidden border border-slate-850 hover:border-slate-700/50"
+                                    style={{ perspective: '1000px' }}
+                                >
+                                    {/* Top gradient line */}
+                                    <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${project.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
-                                {/* Header */}
-                                <div className="flex items-start justify-between mb-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${project.accent} flex items-center justify-center opacity-85`}>
-                                            <Icon size={16} className="text-white" />
+                                    {/* Header */}
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${project.accent} flex items-center justify-center opacity-85`}>
+                                                <Icon size={16} className="text-white" aria-hidden="true" />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-lg font-bold text-white group-hover:text-primary-300 transition-colors leading-tight">
+                                                    {project.title}
+                                                </h3>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h3 className="text-lg font-bold text-white group-hover:text-primary-300 transition-colors leading-tight">
-                                                {project.title}
-                                            </h3>
+                                        
+                                        {/* Action Links */}
+                                        <div className="flex items-center gap-3 shrink-0">
+                                            {project.githubLink && (
+                                                <a
+                                                    href={project.githubLink}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    aria-label={`View ${project.title} GitHub repository`}
+                                                    title="View GitHub Repository"
+                                                    className="text-slate-400 hover:text-white transition-all duration-300 hover:scale-110"
+                                                >
+                                                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.28-1.56 3.285-1.23 3.285-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                                                    </svg>
+                                                </a>
+                                            )}
+                                            {project.liveLink && (
+                                                <a
+                                                    href={project.liveLink}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    aria-label={`Visit ${project.title} live website`}
+                                                    title="Visit Live Website"
+                                                    className="text-slate-400 hover:text-primary-400 transition-all duration-300 hover:scale-110"
+                                                >
+                                                    <ExternalLink size={15} aria-hidden="true" />
+                                                </a>
+                                            )}
                                         </div>
                                     </div>
-                                    
-                                    {/* Action Links */}
-                                    <div className="flex items-center gap-3 shrink-0">
-                                        {project.githubLink && (
-                                            <a
-                                                href={project.githubLink}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                title="View GitHub Repository"
-                                                className="text-slate-500 hover:text-white transition-all duration-300 hover:scale-110"
+
+                                    {/* Description */}
+                                    <p className="text-slate-300 text-xs leading-relaxed flex-grow mb-5 line-clamp-3">
+                                        {project.description}
+                                    </p>
+
+                                    {/* Tech tags */}
+                                    <div className="flex flex-wrap gap-1.5 mt-auto">
+                                        {project.tech.map((tech, i) => (
+                                            <span
+                                                key={i}
+                                                className="text-[10px] font-mono font-medium text-primary-400/90 bg-primary-400/10 px-2 py-0.5 rounded border border-primary-400/20"
                                             >
-                                                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.28-1.56 3.285-1.23 3.285-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                                                </svg>
-                                            </a>
-                                        )}
-                                        {project.liveLink && (
-                                            <a
-                                                href={project.liveLink}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                title="Visit Live Website"
-                                                className="text-slate-500 hover:text-primary-400 transition-all duration-300 hover:scale-110"
-                                            >
-                                                <ExternalLink size={15} />
-                                            </a>
-                                        )}
+                                                {tech}
+                                            </span>
+                                        ))}
                                     </div>
                                 </div>
-
-                                {/* Description */}
-                                <p className="text-slate-400 text-xs leading-relaxed flex-grow mb-5 line-clamp-3">
-                                    {project.description}
-                                </p>
-
-                                {/* Tech tags */}
-                                <div className="flex flex-wrap gap-1.5 mt-auto">
-                                    {project.tech.map((tech, i) => (
-                                        <span
-                                            key={i}
-                                            className="text-[10px] font-mono font-medium text-primary-400/80 bg-primary-400/5 px-2 py-0.5 rounded border border-primary-400/10"
-                                        >
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })
+                    )}
                 </div>
 
                 {/* Empty State */}

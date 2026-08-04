@@ -4,18 +4,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Globe } from 'lucide-react';
 import { staticProjects } from '../data/projects';
+import { getApiUrl } from '../api/client';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // staticProjects is now imported from ../data/projects
-
-const getApiUrl = (path) => {
-    if (import.meta.env.VITE_API_URL) return `${import.meta.env.VITE_API_URL}${path}`;
-    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
-        return `https://portfolio-backend-980z.onrender.com${path}`;
-    }
-    return path;
-};
 
 const ProjectsSection = () => {
     const sectionRef = useRef(null);

@@ -38,6 +38,7 @@ const SideNav = () => {
 
     return (
         <nav
+            aria-label="Sidebar navigation"
             className="side-nav-container fixed right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-6 z-50 px-3 py-8 rounded-[50px]"
             style={{
                 background: 'rgba(2, 6, 23, 0.5)',
@@ -51,6 +52,7 @@ const SideNav = () => {
             <a
                 href="#hero"
                 id="sidenav-logo"
+                aria-label="Scroll to home hero section"
                 onClick={(e) => {
                     e.preventDefault();
                     scrollTo('hero');
@@ -69,17 +71,19 @@ const SideNav = () => {
                         key={item.id}
                         href={`#${item.id}`}
                         id={`sidenav-link-${item.id}`}
+                        aria-label={`Scroll to ${item.label} section`}
                         onClick={(e) => {
                             e.preventDefault();
                             scrollTo(item.id);
                         }}
                         className={`flex flex-col items-center gap-1.5 transition-all duration-300 group cursor-pointer ${
-                            isActive ? 'text-primary-400' : 'text-slate-500 hover:text-primary-300'
+                            isActive ? 'text-primary-400' : 'text-slate-400 hover:text-primary-300'
                         }`}
                     >
                         <Icon
                             size={18}
                             strokeWidth={isActive ? 2.5 : 1.8}
+                            aria-hidden="true"
                             className="transition-transform duration-300 group-hover:scale-110"
                         />
                         <span

@@ -30,13 +30,7 @@ const socials = [
     },
 ];
 
-const getApiUrl = (path) => {
-    if (import.meta.env.VITE_API_URL) return `${import.meta.env.VITE_API_URL}${path}`;
-    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
-        return `https://portfolio-backend-980z.onrender.com${path}`;
-    }
-    return path;
-};
+import { getApiUrl } from '../api/client';
 
 const ContactSection = () => {
     const sectionRef = useRef(null);

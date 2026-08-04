@@ -11,36 +11,30 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Master Admin Credentials Bypass & Dynamic Creation
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Please provide email/username and password' });
+        }
+
         const adminEmail = process.env.ADMIN_EMAIL || 'phulkeshwarmahto9@gmail.com';
         const adminPassword = process.env.ADMIN_PASSWORD;
 
-        if (adminPassword && (email === 'phulkeshwar' || email === adminEmail) && password === adminPassword) {
-            let adminUser = await User.findOne({ email: adminEmail });
-            if (!adminUser) {
-                const salt = await bcrypt.genSalt(10);
-                const hashedPassword = await bcrypt.hash(adminPassword, salt);
-                adminUser = await User.create({
-                    name: 'Phulkeshwar Mahto',
-                    email: adminEmail,
-                    password: hashedPassword,
-                    role: 'admin',
-                    isVerified: true
-                });
-            } else if (adminUser.role !== 'admin') {
-                await User.updateOne({ _id: adminUser._id }, { $set: { role: 'admin' } });
-                adminUser.role = 'admin';
-            }
-            return res.json({
-                _id: adminUser.id,
-                name: adminUser.name,
-                email: adminUser.email,
-                role: adminUser.role,
-                token: generateToken(adminUser._id),
+        // Auto-seed admin user if no admin user exists yet
+        let adminUser = await User.findOne({ email: adminEmail });
+        if (!adminUser && adminPassword) {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(adminPassword, salt);
+            adminUser = await User.create({
+                name: 'Phulkeshwar Mahto',
+                email: adminEmail,
+                password: hashedPassword,
+                role: 'admin',
+                isVerified: true
             });
         }
 
-        const user = await User.findOne({ email });
+        // Support login by email or matching admin username
+        const queryEmail = (email === 'phulkeshwar' || email === adminEmail) ? adminEmail : email;
+        const user = await User.findOne({ email: queryEmail });
 
         if (user && (await bcrypt.compare(password, user.password))) {
             // Check if verified
@@ -48,7 +42,7 @@ const loginUser = async (req, res) => {
                 return res.status(401).json({ message: 'Please verify your email first' });
             }
 
-            res.json({
+            return res.json({
                 _id: user.id,
                 name: user.name,
                 email: user.email,
@@ -56,10 +50,10 @@ const loginUser = async (req, res) => {
                 token: generateToken(user._id),
             });
         } else {
-            res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ message: 'Invalid email or password' });
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: process.env.NODE_ENV === 'production' ? 'Authentication error' : error.message });
     }
 };
 
