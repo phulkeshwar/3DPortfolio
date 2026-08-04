@@ -9,7 +9,7 @@ This website showcases academic achievements, professional milestones, technical
 ## 🚀 Key Features
 
 ### 1. **Cinematic 3D Interactive Background**
-- ** NASA Earth Globe**: High-resolution NASA textures, bump mapping, specular specular lighting, cloud overlay rotation, and an atmospheric glow shader.
+- **NASA Earth Globe**: High-resolution NASA textures, bump mapping, specular lighting, cloud overlay rotation, and an atmospheric glow shader.
 - **Node-Particle Wireframe Network**: A coexisting cluster of 180 active particles bouncing inside a bounding box with real-time distance calculations for network connection lines.
 - **Clipping Prevention**: Physics collision math that pushes floating nodes away from the Earth’s atmosphere to prevent mesh clipping.
 - **Super-Responsive Parallax**: Camera positions respond instantly to mouse coordinates with dynamic lerp tracking (`0.06` speed) and custom Earth tilt.
@@ -20,16 +20,28 @@ This website showcases academic achievements, professional milestones, technical
 - **Back-Easing Skills Tags**: Technology pills stagger in with playful elastic eases.
 - **Animated Counter Cards**: Stat badges count up dynamically from zero when scrolled into view.
 
-### 3. **✉️ Direct Contact Form & Nodemailer Dispatch**
+### 3. **🎨 Curated Featured Showcase & Dedicated Projects Sandbox (`/projects`)**
+- **Featured Homepage Grid**: Displays top 6 featured enterprise & hackathon builds (*GramBazaar*, *Call.io*, *MedScribe AI*, *NIAMT Racing*, *Striver DSA Tracker*).
+- **Glassmorphic "See More Projects" CTA**: Smooth transition leading to the full project repository.
+- **Full Showcase Page (`/projects`)**: Dedicated sandbox page listing all 17 projects with:
+  - **Instant Search**: Search by project title, description, or technology stack in real time.
+  - **Category Filtering**: Filter across `All`, `Full-Stack`, `React`, `Utilities`, and `Calculators`.
+  - **3D Styling & GSAP Stagger**: Seamless integration with the 3D canvas and dynamic card entry animations.
+  - **Back-to-Portfolio Navigation**: Quick return button to main portfolio sections.
+
+### 4. **📄 High-Resolution Resume Integration**
+- Embedded direct download for `PhulkeshwarResume.pdf` (downloadable as `Phulkeshwar_Mahto_Resume.pdf`) across the homepage About section and dedicated `/about` route.
+
+### 5. **✉️ Direct Contact Form & Nodemailer Dispatch**
 - **Direct Mailer**: A modern glassmorphic contact form that automatically stores messages in MongoDB and immediately dispatches a direct report notification to the administrator’s inbox using Nodemailer.
 - **✨ Gemini AI Message Polisher**: A custom integrated AI tool that allows visitors to submit their rough drafts, sending them to the Gemini API (`/api/ai/improve-message`) to professionally polish and rewrite their message before sending.
 
-### 4. **🔒 Glassmorphic Admin Command Center (`/admin`)**
+### 6. **🔒 Glassmorphic Admin Command Center (`/admin`)**
 - Secure administrative route accessible at `/admin`.
-- Authenticates using custom administrator credentials.
-- **Dynamic Project CRUD**: Interface to view all projects, add new ones (supporting title, badge, links, tech stack), edit existing ones (pre-loads details dynamically), or delete them.
-- **Dynamic Skills CRUD**: Form to add skill entries (category selects, devicon class tracking, slider competency percentage), edit details, or remove them.
-- **Inbox Reader**: A full panel listing incoming contact reports with timestamps, date formatting, and mailto reply shortcuts.
+- Authenticates using custom administrator credentials with JWT tokens.
+- **Dynamic Project CRUD**: View all projects, add new ones (supporting title, badge, links, tech stack), edit existing ones, or delete them. Includes automated DB seeding utilities (`seed-all-projects.js`).
+- **Dynamic Skills CRUD**: Add skill entries (category selects, devicon tracking, competency level), edit, or remove entries.
+- **Inbox Reader & Direct Email Dispatch**: View incoming contact reports and send direct email replies directly from the dashboard via Nodemailer.
 
 ---
 
@@ -57,8 +69,9 @@ This website showcases academic achievements, professional milestones, technical
 MyPortfolio/
 ├── client/              # React (Vite) Frontend
 │   ├── src/
-│   │   ├── components/  # Reusable UI & 3D Components (ThreeBackground, SideNav, etc.)
-│   │   ├── pages/       # Router layouts (MainPortfolio, Dashboard)
+│   │   ├── components/  # Reusable UI & 3D Components (ThreeBackground, ProjectsSection, etc.)
+│   │   ├── data/        # Shared static data repositories (projects.js)
+│   │   ├── pages/       # Page components (Home, Projects, Dashboard)
 │   │   ├── index.css    # CSS design system (Glassmorphism, availability rings)
 │   │   └── App.jsx      # Route switches & GSAP ScrollTrigger configs
 │   └── ...
