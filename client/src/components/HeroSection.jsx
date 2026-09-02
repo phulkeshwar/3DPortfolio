@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ArrowDown, Sparkles } from 'lucide-react';
-import profilePic from '../assets/me3.jpg';
+import profilePic from '../assets/me.jpg';
 
 const HeroSection = () => {
     const sectionRef = useRef(null);

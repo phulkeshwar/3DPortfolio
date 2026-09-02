@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import profilePic from '../assets/me3.jpg'; 
+import profilePic from '../assets/me.jpg'; 
 
 const Home = () => {
     const [featuredProjects, setFeaturedProjects] = useState([]);
