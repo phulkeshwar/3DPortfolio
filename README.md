@@ -150,8 +150,8 @@ MyPortfolio/
 
 ## 🛡️ Admin Access
 To manage showcase content dynamically, head to **`/admin`** and log in with your credentials:
-- **Username**: `phulkeshwar`
-- **Password**: `phulkeshwar@828403`
+- **Username**: `yourusername`
+- **Password**: `yourpassword`
 
 On successful authentication, the server dynamically creates your verified admin user record in the MongoDB database, returning an authenticated JWT token to authenticate all subsequent CRUD actions.
 
