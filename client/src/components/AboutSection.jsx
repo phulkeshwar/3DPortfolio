@@ -161,8 +161,8 @@ const AboutSection = () => {
                                 Recently selected as a{' '}
                                 <span className="text-white font-medium">Web Development Intern at UptoSkills</span>,
                                 I balance production builds with rigorous study of{' '}
-                                <span className="text-white font-medium">Data Structures and Algorithms in C++</span>,
-                                targeting <span className="text-primary-400 font-semibold">GATE 2027</span>.
+                                <span className="text-white font-medium">Data Structures and Algorithms in C++.</span>,
+                                
                             </p>
                         </div>
 
