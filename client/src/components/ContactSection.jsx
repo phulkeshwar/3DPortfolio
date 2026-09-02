@@ -24,7 +24,7 @@ const socials = [
     },
     {
         name: 'Twitter / X',
-        url: 'https://x.com/phulkeshwar2005',
+        url: 'https://x.com/phulkeshwarr',
         icon: 'devicon-twitter-original',
         iconColor: '#1DA1F2',
     },
